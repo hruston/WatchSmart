@@ -46,7 +46,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     /* Bonus: Rozmycie tła pod headerem (efekt szkła) */
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-}
+
+       height: auto;        /* Rośnie naturalnie */
+    max-height: 500px;   /* Ale zatrzyma się na 500px */
+    overflow-y: auto;    /* Jeśli treść będzie większa, pojawi się pasek przewijania wewnątrz */
 }
 
     
