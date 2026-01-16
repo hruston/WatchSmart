@@ -35,6 +35,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     box-sizing: border-box;
     border-radius: 50px;
 
+       padding-top: env(safe-area-inset-top); /* Automatycznie dostosuje odstęp do wysokości wyspy */
+    background-color: transparent; /* Pozwoli zobaczyć przewijaną treść pod spodem */
+}
+
     /* Rozwiązanie problemu centrowania: */
     position: fixed;
     top: 0px;         /* Odstęp od góry, by widzieć zaokrąglone rogi */
@@ -104,7 +108,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Gemini_Generated_Image_zhy5muzhy5muzhy5a-removebg-preview.png"
         alt="WatchSmart"
         class="logo">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 </header>
 
 <div class="container">
