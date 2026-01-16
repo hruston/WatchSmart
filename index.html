@@ -21,13 +21,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     }
 
    /* Pasek nawigacyjny */
-    header {
-        background: rgba(0, 0, 0, 0.6);
-        padding: 10px 20px;
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-    }
+   header {
+    background: rgba(0, 0, 0, 0.6);
+    max-width: 1000px;
+    width: 95%;        /* Dzięki temu na telefonach nie będzie dotykał krawędzi */
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+    /* Rozwiązanie problemu centrowania: */
+    position: fixed;
+    top: 15px;         /* Odstęp od góry, by widzieć zaokrąglone rogi */
+    left: 50%;         /* Przesuwa lewy brzeg na środek ekranu */
+    transform: translateX(-50%); /* Cofa header o połowę jego szerokości, idealnie go centrując */
+    
+    /* Bonus: Rozmycie tła pod headerem (efekt szkła) */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
     
     /* Logo */
     .logo {
