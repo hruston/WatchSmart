@@ -35,6 +35,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     box-sizing: border-box;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
+
+       
+    /* Rozwiązanie problemu centrowania: */
+    position: fixed;
+    top: 0px;         /* Odstęp od góry, by widzieć zaokrąglone rogi */
+    left: 50%;         /* Przesuwa lewy brzeg na środek ekranu */
+    transform: translateX(-50%); /* Cofa header o połowę jego szerokości, idealnie go centrując */
+    
+    /* Bonus: Rozmycie tła pod headerem (efekt szkła) */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
 }
 
     
