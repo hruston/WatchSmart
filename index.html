@@ -21,25 +21,27 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     }
 
     /* Pasek nawigacyjny */
-    header {
-        background: rgba(0, 0, 0, 0.6);
-        max-width: 1000px;
-        margin: 100px auto;
-        padding: 10px 20px;
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        position: fixed;
-        top: 0;         
-        left: 0;         /* Przykleja do lewej krawędzi */
-        width: 100%;     /* Rozciąga header na całą szerokość ekranu */
-        z-index: 1000;   /* Gwarantuje, że header będzie nad resztą treści */
-        box-sizing: border-box; /* Ważne: zapobiega wychodzeniu headera poza ekran przez padding */
-        border-radius: 50px;
-        }
+   header {
+    background: rgba(0, 0, 0, 0.6);
+    max-width: 1000px; /* Maksymalna szerokość */
+    width: 90%;        /* Szerokość na mniejszych ekranach (żeby nie dotykał krawędzi) */
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-radius: 50px;
+
+    /* CENTROWANIE ELEMENTU FIXED: */
+    position: fixed;
+    top: 20px;         /* Dałem 20px, żeby zaokrąglenie (border-radius) było ładnie widoczne */
+    left: 50%;         /* Przesuwa lewą krawędź na środek ekranu */
+    transform: translateX(-50%); /* Cofa header o połowę jego własnej szerokości, centrując go idealnie */
+}
 
     
     /* Logo */
