@@ -30,6 +30,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         align-items: center;
         display: flex;
         position: fixed;
+    top: 0;          /* Przykleja do samej góry okna */
+    left: 0;         /* Przykleja do lewej krawędzi */
+    width: 100%;     /* Rozciąga header na całą szerokość ekranu */
+    z-index: 1000;   /* Gwarantuje, że header będzie nad resztą treści */
+    box-sizing: border-box; /* Ważne: zapobiega wychodzeniu headera poza ekran przez padding */
         
         
         
