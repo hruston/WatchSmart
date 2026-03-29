@@ -146,6 +146,171 @@
             font-size: 16px;
             opacity: 0.7;
         }
+        
+        /* Sekcja posty*/
+        
+        .forum-section {
+    margin-top: 45px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.forum-section h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    color: white;
+}
+
+.forum-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.forum-section input,
+.forum-section textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 14px 16px;
+    color: white;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.forum-section input::placeholder,
+.forum-section textarea::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.forum-section input:focus,
+.forum-section textarea:focus {
+    border-color: rgba(77, 255, 136, 0.65);
+    background: rgba(255, 255, 255, 0.11);
+    box-shadow: 0 0 0 3px rgba(77, 255, 136, 0.12);
+}
+
+.forum-section textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.forum-section button {
+    align-self: flex-start;
+    background: linear-gradient(135deg, #4dff88, #31d96d);
+    color: #111;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+    box-shadow: 0 8px 20px rgba(77, 255, 136, 0.18);
+}
+
+.forum-section button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(77, 255, 136, 0.24);
+}
+
+.forum-section button:active {
+    transform: translateY(0);
+}
+
+#postsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.post {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+    padding: 18px;
+    backdrop-filter: blur(4px);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.post:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.post-author {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #4dff88;
+    letter-spacing: 0.3px;
+}
+
+.post-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.95);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.post-contact {
+    margin-top: 14px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.post-contact a {
+    color: #7ec8ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.post-contact a:hover {
+    text-decoration: underline;
+}
+
+.post-date {
+    margin-top: 12px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+@media (max-width: 768px) {
+    .forum-section h2 {
+        font-size: 20px;
+    }
+
+    .forum-section input,
+    .forum-section textarea {
+        font-size: 15px;
+        padding: 13px 14px;
+    }
+
+    .forum-section button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .post {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .post-text {
+        font-size: 15px;
+    }
+}
+        
     </style>
 </head>
 <body>
@@ -190,7 +355,103 @@
     </a>
 </div>
 </div>
+    
+    <div class="forum-section">
+    <h2>Posty społeczności</h2>
 
+    <div class="forum-form">
+        <input id="nickname" placeholder="Twój nick">
+        <input id="contact" placeholder="Kontakt (FB / email)">
+        <textarea id="postInput" placeholder="Napisz post..."></textarea>
+        <button onclick="addPost()">Dodaj post</button>
+    </div>
+
+    <div id="postsList"></div>
+</div>
+</div>
+
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    onSnapshot,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyALbBW9S9BdFaZvvHiW_TXvar6ZtnUhvvI",
+    authDomain: "watchsmart-50fb9.firebaseapp.com",
+    projectId: "watchsmart-50fb9",
+    storageBucket: "watchsmart-50fb9.firebasestorage.app",
+    messagingSenderId: "498356410021",
+    appId: "1:498356410021:web:b681e4212e0bd2d0171f4c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const nicknameInput = document.getElementById("nickname");
+  const contactInput = document.getElementById("contact");
+  const postInput = document.getElementById("postInput");
+  const postsList = document.getElementById("postsList");
+
+  window.addPost = async function () {
+    const nickname = nicknameInput.value.trim();
+    const contact = contactInput.value.trim();
+    const text = postInput.value.trim();
+
+    if (text.length < 3) {
+      alert("Post jest za krótki");
+      return;
+    }
+
+    await addDoc(collection(db, "posts"), {
+      nickname: nickname || "Anonim",
+      contact: contact || "",
+      text,
+      createdAt: serverTimestamp()
+    });
+
+    postInput.value = "";
+  };
+
+  const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+
+  onSnapshot(q, (snapshot) => {
+    postsList.innerHTML = "";
+
+    snapshot.forEach((doc) => {
+      const post = doc.data();
+
+      const div = document.createElement("div");
+      div.className = "post";
+
+      const date = post.createdAt?.toDate
+        ? post.createdAt.toDate().toLocaleString("pl-PL")
+        : "teraz";
+
+      div.innerHTML = `
+  <div class="post-author">${escapeHtml(post.nickname)}</div>
+  <div class="post-text">${escapeHtml(post.text)}</div>
+  ${post.contact ? `<div class="post-contact">Kontakt: ${escapeHtml(post.contact)}</div>` : ""}
+  <div class="post-date">${date}</div>
+`;
+
+      postsList.appendChild(div);
+    });
+  });
+
+  function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.innerText = text;
+    return div.innerHTML;
+  }
+</script>
+    
 <footer>
     &copy; 2026 WatchSmart
 </footer>
