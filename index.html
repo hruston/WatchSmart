@@ -7,59 +7,52 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* Tło strony */
-        
         body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        min-height: 100vh;
-        font-family: 'Montserrat', sans-serif;
-        background: url("https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Background.jpg") center/cover no-repeat fixed;
-        background-color: #323568;
-        color: white;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            background: url("https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Background.jpg") center/cover no-repeat fixed;
+            background-color: #323568;
+            color: white;
         }
 
+        header {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 30px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 70px;
+            max-width: 1000px;
+            margin: 20px auto 0 auto;
+            box-sizing: border-box;
+        }
 
-        /* Pasek nawigacyjny - poprawiony i scalony */
-       
-    header {
-        background: rgba(0, 0, 0, 0.6);
-        padding: 10px 20px;
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-        border-bottom-left-radius: 30px;
-        border-bottom-right-radius: 30px;
-        border-top-right-radius: 30px;
-        border-top-left-radius: 30px;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        height: 70px;
-    }
-      
-
-        /* Logo */
         .logo {
             height: 60px;
             width: auto;
         }
 
-        /* Główna zawartość */
         .container {
             max-width: 1000px;
-            margin: 30px auto 50px auto; /* Zwiększony górny margines, by header nie zasłaniał treści */
+            margin: 30px auto 50px auto;
             background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 30px;
             backdrop-filter: blur(5px);
-            font-weight: 300;
+            font-weight: 400;
             font-size: 18px;
+            box-sizing: border-box;
         }
 
         h1 {
@@ -67,11 +60,8 @@
             margin-top: 0;
             font-weight: 500;
             font-size: 18px;
-            
         }
 
-        /* Sekcje filmów/serii */
-        
         .movie-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -106,9 +96,7 @@
             font-weight: 400;
             letter-spacing: 1px;
         }
-        
-        /* Sekcja Facebook */
-        
+
         .fb-section {
             text-align: center;
             margin-top: 40px;
@@ -140,318 +128,388 @@
             margin-right: 10px;
             font-size: 18px;
         }
+
+        .forum-section {
+            margin-top: 45px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .forum-section h2 {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            color: white;
+        }
+
+        .forum-note {
+            text-align: center;
+            opacity: 0.8;
+            margin: 0 0 20px 0;
+            font-size: 15px;
+        }
+
+        .forum-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .forum-section input,
+        .forum-section textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 14px 16px;
+            color: white;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            outline: none;
+            transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .forum-section input::placeholder,
+        .forum-section textarea::placeholder {
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .forum-section input:focus,
+        .forum-section textarea:focus {
+            border-color: rgba(77, 255, 136, 0.65);
+            background: rgba(255, 255, 255, 0.11);
+            box-shadow: 0 0 0 3px rgba(77, 255, 136, 0.12);
+        }
+
+        .forum-section textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .forum-section button {
+            align-self: flex-start;
+            background: linear-gradient(135deg, #1877F2, #145dbf);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+            box-shadow: 0 8px 20px rgba(77, 255, 136, 0.18);
+        }
+
+        .forum-section button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(77, 255, 136, 0.24);
+        }
+
+        .forum-section button:active {
+            transform: translateY(0);
+        }
+
+        #postsList {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .post {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 20px;
+            padding: 18px;
+            backdrop-filter: blur(4px);
+            transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .post:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .post-author {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1877F2;
+            letter-spacing: 0.3px;
+        }
+
+        .post-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.95);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .post-contact {
+            margin-top: 14px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .post-contact a {
+            color: #7ec8ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .post-contact a:hover {
+            text-decoration: underline;
+        }
+
+        .post-date {
+            margin-top: 12px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
         footer {
             text-align: center;
             padding: 40px 0;
             font-size: 16px;
             opacity: 0.7;
         }
-        
-        /* Sekcja posty*/
-        
-        .forum-section {
-    margin-top: 45px;
-    padding-top: 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
 
-.forum-section h2 {
-    text-align: center;
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0 0 20px 0;
-    color: white;
-}
+        @media (max-width: 768px) {
+            body {
+                background-attachment: scroll;
+            }
 
-.forum-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 30px;
-}
+            header {
+                margin: 15px 15px 0 15px;
+                max-width: none;
+            }
 
-.forum-section input,
-.forum-section textarea {
-    width: 100%;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-    padding: 14px 16px;
-    color: white;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-    outline: none;
-    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-}
+            .container {
+                margin: 20px 15px 40px 15px;
+                padding: 16px;
+                font-size: 16px;
+            }
 
-.forum-section input::placeholder,
-.forum-section textarea::placeholder {
-    color: rgba(255, 255, 255, 0.55);
-}
+            .movie-list {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                gap: 15px;
+            }
 
-.forum-section input:focus,
-.forum-section textarea:focus {
-    border-color: rgba(77, 255, 136, 0.65);
-    background: rgba(255, 255, 255, 0.11);
-    box-shadow: 0 0 0 3px rgba(77, 255, 136, 0.12);
-}
+            .movie-card p,
+            .fb-section,
+            .fb-button {
+                font-size: 16px;
+            }
 
-.forum-section textarea {
-    min-height: 120px;
-    resize: vertical;
-}
+            .logo {
+                height: 48px;
+            }
 
-.forum-section button {
-    align-self: flex-start;
-    background: linear-gradient(135deg, #4dff88, #31d96d);
-    color: #111;
-    border: none;
-    border-radius: 999px;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
-    box-shadow: 0 8px 20px rgba(77, 255, 136, 0.18);
-}
+            .forum-section h2 {
+                font-size: 20px;
+            }
 
-.forum-section button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(77, 255, 136, 0.24);
-}
+            .forum-section input,
+            .forum-section textarea {
+                font-size: 15px;
+                padding: 13px 14px;
+            }
 
-.forum-section button:active {
-    transform: translateY(0);
-}
+            .forum-section button {
+                width: 100%;
+            }
 
-#postsList {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
+            .post {
+                padding: 15px;
+                border-radius: 16px;
+            }
 
-.post {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 20px;
-    padding: 18px;
-    backdrop-filter: blur(4px);
-    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-
-.post:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.16);
-}
-
-.post-author {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #4dff88;
-    letter-spacing: 0.3px;
-}
-
-.post-text {
-    font-size: 16px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.95);
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-.post-contact {
-    margin-top: 14px;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.82);
-}
-
-.post-contact a {
-    color: #7ec8ff;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.post-contact a:hover {
-    text-decoration: underline;
-}
-
-.post-date {
-    margin-top: 12px;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.55);
-}
-
-@media (max-width: 768px) {
-    .forum-section h2 {
-        font-size: 20px;
-    }
-
-    .forum-section input,
-    .forum-section textarea {
-        font-size: 15px;
-        padding: 13px 14px;
-    }
-
-    .forum-section button {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .post {
-        padding: 15px;
-        border-radius: 16px;
-    }
-
-    .post-text {
-        font-size: 15px;
-    }
-}
-        
+            .post-text {
+                font-size: 15px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/unnamed-removebg-preview%20(2).png"
+    <img
+        src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/unnamed-removebg-preview%20(2).png"
         alt="WatchSmart"
-        class="logo">
+        class="logo"
+    >
 </header>
 
 <div class="container">
-    <h1>Graj sprytnie i używaj kodów zamiast nazw.</h1>
+    <h1>Graj sprytnie i używaj kodów zamiast nazw na Facebooku.</h1>
     <p style="text-align: center; color: #ff4d4d;">❌ Źle = Szukam/Oferuję Netflix ❌</p>
     <p style="text-align: center; color: #4dff88;">👍 Dobrze = S/O N010X 👍</p>
 
     <div class="movie-list">
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/Netflix.png" alt="Netflix"><p>N010X</p></div>
-        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/HBO.jpg" alt="HBO MAX"><p>H020M</p></div>
-        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/Skyshowtime.jpg" alt="SkyShowTime"><p>S030S</p></div>
-        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/Prime.png" alt="PrimeVideo"><p>P040E</p></div>
+        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/HBO.jpg" alt="HBO Max"><p>H020M</p></div>
+        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/Skyshowtime.jpg" alt="SkyShowtime"><p>S030S</p></div>
+        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/Prime.png" alt="Prime Video"><p>P040E</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/Disney.jpg" alt="Disney+"><p>D050Y</p></div>
-        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/Appletv.jpg" alt="AppleTV"><p>A060V</p></div>
+        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/Appletv.jpg" alt="Apple TV"><p>A060V</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/cda.jpg" alt="CDA Premium"><p>C070P</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/canal.png" alt="Canal+"><p>C080A</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/polsat.jpg" alt="Polsat Box"><p>P090B</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/player.jpg" alt="Player"><p>P100R</p></div>
-        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/viaplay.png" alt="ViaPlay"><p>V110P</p></div>
+        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/viaplay.png" alt="Viaplay"><p>V110P</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/TVPVOD.jpg" alt="TVP VOD"><p>T120V</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/youtube.png" alt="YouTube Premium"><p>Y130P</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/spotify.jpg" alt="Spotify"><p>S140F</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/tidal.png" alt="Tidal"><p>T150L</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/sweet.jpg" alt="SweetTV"><p>S160V</p></div>
-        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/megogo.png" alt="MeGoGo"><p>M170G</p></div>
+        <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/megogo.png" alt="Megogo"><p>M170G</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/att.aZXRfjqX3-jz3zDEY-_IGhUipote3ZH57Y26T9sIA5U.jpeg" alt="Film Total"><p>F180T</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/att.8Zm40cF2jQf4-XkFZdtVzl0KvjWcUaLUyGTzbP4YfH8.jpeg" alt="FilmBox"><p>F190B</p></div>
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/att.jDy5S4bdkGfBqi8e845HcXQO5ucZgVSBRmKxNaaj9ho.jpeg" alt="ADN"><p>A200N</p></div>
     </div>
-    <div class="fb-section">
-        <p>Wpadaj na grupę!🍿</p>
-        <a href="https://www.facebook.com/groups/1436297687927075/about/" target="_blank" class="fb-button">
-        <i class="fab fa-facebook"></i> Facebook
-    </a>
-</div>
-</div>
-    
+
     <div class="forum-section">
-    <h2>Posty społeczności</h2>
+        <h2>Forum społeczności 🍿</h2>
+        <p class="forum-note">Twoje posty będą widoczne przez 30 dni.</p>
 
-    <div class="forum-form">
-        <input id="nickname" placeholder="Twój nick">
-        <input id="contact" placeholder="Kontakt (FB / email)">
-        <textarea id="postInput" placeholder="Napisz post..."></textarea>
-        <button onclick="addPost()">Dodaj post</button>
+        <div class="forum-form">
+            <input id="nickname" placeholder="Twój nick">
+            <input id="contact" placeholder="Kontakt (numer telefonu, e-mail, telegram)">
+            <textarea id="postInput" placeholder="Napisz post..."></textarea>
+            <button onclick="addPost()">Dodaj post</button>
+        </div>
+
+        <div id="postsList"></div>
     </div>
-
-    <div id="postsList"></div>
+    
+    <div class="fb-section">
+        <p>Wpadaj na grupę! 🍿</p>
+        <a href="https://www.facebook.com/groups/1436297687927075/about/" target="_blank" class="fb-button" rel="noopener noreferrer">
+            <i class="fab fa-facebook"></i> Facebook
+        </a>
+    </div>
+    
 </div>
-</div>
 
-    <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+        getFirestore,
+        collection,
+        addDoc,
+        query,
+        orderBy,
+        onSnapshot,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyALbBW9S9BdFaZvvHiW_TXvar6ZtnUhvvI",
-    authDomain: "watchsmart-50fb9.firebaseapp.com",
-    projectId: "watchsmart-50fb9",
-    storageBucket: "watchsmart-50fb9.firebasestorage.app",
-    messagingSenderId: "498356410021",
-    appId: "1:498356410021:web:b681e4212e0bd2d0171f4c"
-  };
+    const firebaseConfig = {
+        apiKey: "AIzaSyALbBW9S9BdFaZvvHiW_TXvar6ZtnUhvvI",
+        authDomain: "watchsmart-50fb9.firebaseapp.com",
+        projectId: "watchsmart-50fb9",
+        storageBucket: "watchsmart-50fb9.firebasestorage.app",
+        messagingSenderId: "498356410021",
+        appId: "1:498356410021:web:b681e4212e0bd2d0171f4c"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  const nicknameInput = document.getElementById("nickname");
-  const contactInput = document.getElementById("contact");
-  const postInput = document.getElementById("postInput");
-  const postsList = document.getElementById("postsList");
+    const nicknameInput = document.getElementById("nickname");
+    const contactInput = document.getElementById("contact");
+    const postInput = document.getElementById("postInput");
+    const postsList = document.getElementById("postsList");
 
-  window.addPost = async function () {
-    const nickname = nicknameInput.value.trim();
-    const contact = contactInput.value.trim();
-    const text = postInput.value.trim();
+    window.addPost = async function () {
+        const nickname = nicknameInput.value.trim();
+        const contact = contactInput.value.trim();
+        const text = postInput.value.trim();
 
-    if (text.length < 3) {
-      alert("Post jest za krótki");
-      return;
+        if (text.length < 3) {
+            alert("Post jest za krótki");
+            return;
+        }
+
+        if (text.length > 500) {
+            alert("Post jest za długi");
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, "posts"), {
+                nickname: nickname || "Anonim",
+                contact: contact || "",
+                text,
+                createdAt: serverTimestamp()
+            });
+
+            nicknameInput.value = "";
+            contactInput.value = "";
+            postInput.value = "";
+        } catch (error) {
+            console.error("Błąd dodawania posta:", error);
+            alert("Nie udało się dodać posta.");
+        }
+    };
+
+    const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+
+    onSnapshot(q, (snapshot) => {
+        postsList.innerHTML = "";
+
+        snapshot.forEach((doc) => {
+            const post = doc.data();
+            const div = document.createElement("div");
+            div.className = "post";
+
+            const date = post.createdAt?.toDate
+                ? post.createdAt.toDate().toLocaleString("pl-PL")
+                : "teraz";
+
+            const safeNickname = escapeHtml(post.nickname || "Anonim");
+            const safeText = escapeHtml(post.text || "");
+            const contactHtml = formatContact(post.contact || "");
+
+            div.innerHTML = `
+                <div class="post-author">${safeNickname}</div>
+                <div class="post-text">${safeText}</div>
+                ${contactHtml ? `<div class="post-contact">Kontakt: ${contactHtml}</div>` : ""}
+                <div class="post-date">${date}</div>
+            `;
+
+            postsList.appendChild(div);
+        });
+    });
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.innerText = text;
+        return div.innerHTML;
     }
 
-    await addDoc(collection(db, "posts"), {
-      nickname: nickname || "Anonim",
-      contact: contact || "",
-      text,
-      createdAt: serverTimestamp()
-    });
+    function formatContact(contact) {
+        if (!contact) return "";
 
-    postInput.value = "";
-  };
+        const trimmed = contact.trim();
+        const safeText = escapeHtml(trimmed);
 
-  const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+        if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+            return `<a href="${safeText}" target="_blank" rel="noopener noreferrer">Napisz do autora</a>`;
+        }
 
-  onSnapshot(q, (snapshot) => {
-    postsList.innerHTML = "";
+        if (trimmed.includes("@") && !trimmed.includes(" ")) {
+            return `<a href="mailto:${safeText}">${safeText}</a>`;
+        }
 
-    snapshot.forEach((doc) => {
-      const post = doc.data();
-
-      const div = document.createElement("div");
-      div.className = "post";
-
-      const date = post.createdAt?.toDate
-        ? post.createdAt.toDate().toLocaleString("pl-PL")
-        : "teraz";
-
-      div.innerHTML = `
-  <div class="post-author">${escapeHtml(post.nickname)}</div>
-  <div class="post-text">${escapeHtml(post.text)}</div>
-  ${post.contact ? `<div class="post-contact">Kontakt: ${escapeHtml(post.contact)}</div>` : ""}
-  <div class="post-date">${date}</div>
-`;
-
-      postsList.appendChild(div);
-    });
-  });
-
-  function escapeHtml(text) {
-    const div = document.createElement("div");
-    div.innerText = text;
-    return div.innerHTML;
-  }
+        return safeText;
+    }
 </script>
-    
+
 <footer>
     &copy; 2026 WatchSmart
 </footer>
