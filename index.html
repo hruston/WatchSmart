@@ -63,9 +63,32 @@
             color: #1877F2;
         }
         
+        .forum-button {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #1877F2, #145dbf);
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 700;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 8px 20px rgba(77, 255, 136, 0.18);
+}
+
+.forum-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(77, 255, 136, 0.24);
+}
+
+.forum-button i {
+    margin-right: 8px;
+}
+        
         h2 {
             text-align: center;
-            margin-top: 0;
+            margin-top: 25px;
             font-weight: 500;
             font-size: 18px;
             color: #1877F2;
@@ -356,9 +379,15 @@
 
 <div class="container">
     <h1>Na stronie znajdziesz kody na Facebook oraz forum społecznościowe.</h1>
+        <div style="text-align:center; margin-top:15px;">
+            <a href="#forum" class="forum-button">
+            <i class="fas fa-comments"></i> Forum
+            </a>
+        <div class="section-divider" style=" margin: 25px 0; border-top: 1px solid rgba(255, 255, 255, 0.1);"></div>
+        </div>
     <h2>Jak używać kodów na Facebook</h2>
-    <p style="text-align: center; color: #ff4d4d; font-size: 18px;">❌ Źle = Szukam/Oferuję Netflix ❌</p>
-    <p style="text-align: center; color: #4dff88; font-size: 18px;">👍 Dobrze = S/O N010X 👍</p>
+        <p style="text-align: center; color: #ff4d4d; font-size: 18px;">❌ Źle = Szukam/Oferuję Netflix ❌</p>
+        <p style="text-align: center; color: #4dff88; font-size: 18px;">👍 Dobrze = S/O N010X 👍</p>
 
     <div class="movie-list">
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/Netflix.png" alt="Netflix"><p>N010X</p></div>
@@ -383,7 +412,7 @@
         <div class="movie-card"><img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/att.jDy5S4bdkGfBqi8e845HcXQO5ucZgVSBRmKxNaaj9ho.jpeg" alt="ADN"><p>A200N</p></div>
     </div>
 
-    <div class="forum-section">
+    <div class="forum-section" id="forum">
         <h2>Forum społeczności 🍿</h2>
         <p class="forum-note">Twoje posty będą widoczne przez 30 dni.</p>
 
