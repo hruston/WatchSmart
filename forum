@@ -1,0 +1,20 @@
+<div class="forum-section" id="forum">
+        <h2>Forum społeczności 🍿</h2>
+        <p class="forum-note">Twoje posty będą widoczne przez 30 dni.</p>
+
+        <div class="forum-form">
+            <input id="nickname" placeholder="Twój nick">
+            <input id="contact" placeholder="Kontakt (numer telefonu, e-mail, telegram)">
+            <textarea id="postInput" placeholder="Napisz post..."></textarea>
+            <button onclick="addPost()">Dodaj post</button>
+        </div>
+
+        <div id="postsList"></div>
+    </div>
+    
+    <div class="fb-section">
+        <p>Wpadaj na grupę! 🍿</p>
+        <a href="https://www.facebook.com/groups/1436297687927075/about/" target="_blank" class="fb-button" rel="noopener noreferrer">
+            <i class="fab fa-facebook"></i> Facebook
+        </a>
+    </div>
