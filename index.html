@@ -65,28 +65,6 @@
             color: #1877F2;
         }
         
-        .forum-button {
-    display: inline-flex;
-    align-items: center;
-    background: linear-gradient(135deg, #1877F2, #145dbf);
-    color: white;
-    text-decoration: none;
-    padding: 12px 24px;
-    border-radius: 999px;
-    font-size: 16px;
-    font-weight: 700;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    box-shadow:  0 8px 20px rgba(24, 119, 242, 0.25);
-}
-
-.forum-button:hover {
-    transform: translateY(-2px);
-    box-shadow:  0 8px 20px rgba(24, 119, 242, 0.25);
-}
-
-.forum-button i {
-    margin-right: 8px;
-}
         
         h2 {
             text-align: center;
@@ -164,148 +142,6 @@
             font-size: 18px;
         }
 
-        .forum-section {
-            margin-top: 45px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
-        }
-
-        .forum-section h2 {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 700;
-            margin: 0 0 20px 0;
-            color: white;
-        }
-
-        .forum-note {
-            text-align: center;
-            opacity: 0.8;
-            margin: 0 0 20px 0;
-            font-size: 15px;
-        }
-
-        .forum-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .forum-section input,
-        .forum-section textarea {
-            width: 100%;
-            box-sizing: border-box;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
-            padding: 14px 16px;
-            color: white;
-            font-size: 16px;
-            font-family: 'Montserrat', sans-serif;
-            outline: none;
-            transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .forum-section input::placeholder,
-        .forum-section textarea::placeholder {
-            color: rgba(255, 255, 255, 0.55);
-        }
-
-        .forum-section input:focus,
-.forum-section textarea:focus {
-    border-color: rgba(24, 119, 242, 0.7);
-    background: rgba(255, 255, 255, 0.11);
-    box-shadow:  0 8px 20px rgba(24, 119, 242, 0.25);
-}
-
-        .forum-section textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .forum-section button {
-            align-self: flex-start;
-            background: linear-gradient(135deg, #1877F2, #145dbf);
-            color: white;
-            border: none;
-            border-radius: 999px;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: 700;
-            font-family: 'Montserrat', sans-serif;
-            cursor: pointer;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
-            box-shadow:  0 8px 20px rgba(24, 119, 242, 0.25);
-        }
-
-        .forum-section button:hover {
-            transform: translateY(-2px);
-            box-shadow:  0 8px 20px rgba(24, 119, 242, 0.25);
-        }
-
-        .forum-section button:active {
-            transform: translateY(0);
-        }
-
-        #postsList {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .post {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            border-radius: 20px;
-            padding: 18px;
-            backdrop-filter: blur(4px);
-            transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-        }
-
-        .post:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.16);
-        }
-
-        .post-author {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #1877F2;
-            letter-spacing: 0.3px;
-        }
-
-        .post-text {
-            font-size: 16px;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.95);
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .post-contact {
-            margin-top: 14px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.82);
-        }
-
-        .post-contact a {
-            color: #7ec8ff;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .post-contact a:hover {
-            text-decoration: underline;
-        }
-
-        .post-date {
-            margin-top: 12px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.55);
-        }
 
         footer {
             text-align: center;
@@ -345,29 +181,7 @@
                 height: 48px;
             }
 
-            .forum-section h2 {
-                font-size: 20px;
-            }
-
-            .forum-section input,
-            .forum-section textarea {
-                font-size: 15px;
-                padding: 13px 14px;
-            }
-
-            .forum-section button {
-                width: 100%;
-            }
-
-            .post {
-                padding: 15px;
-                border-radius: 16px;
-            }
-
-            .post-text {
-                font-size: 15px;
-            }
-        }
+           
     </style>
 </head>
 <body>
@@ -381,10 +195,8 @@
 </header>
 
 <div class="container">
-    <h1>Na stronie znajdziesz kody na Facebook./h1>
-        <div style="text-align:center; margin-top:15px;">
-        <div class="section-divider" style=" margin: 25px 0; border-top: 1px solid rgba(255, 255, 255, 0.1);"></div>
-        </div>
+    <h1>Na stronie znajdziesz kody na Facebook.</h1>
+        
     <h2>Jak używać kodów na Facebook</h2>
         <p style="text-align: center; color: #ff4d4d; font-size: 18px;">❌ Źle = Szukam/Oferuję Netflix ❌</p>
         <p style="text-align: center; color: #4dff88; font-size: 18px;">👍 Dobrze = S/O N010X 👍</p>
@@ -413,6 +225,12 @@
     </div>
 
     
+    <div class="fb-section">
+        <p>Wpadaj na grupę! 🍿</p>
+        <a href="https://www.facebook.com/groups/1436297687927075/about/" target="_blank" class="fb-button" rel="noopener noreferrer">
+            <i class="fab fa-facebook"></i> Facebook
+        </a>
+    </div>
     
 </div>
 
