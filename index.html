@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <style>
         body {
@@ -77,6 +76,7 @@
             gap: 12px;
             max-width: 780px;
             margin: 0 auto 30px auto;
+            box-sizing: border-box;
         }
 
         .form-grid-2 {
@@ -88,9 +88,7 @@
         .post-form input,
         .post-form select,
         .post-form textarea,
-        .comment-form input,
-        .private-msg-box input,
-        .private-msg-box textarea {
+        .comment-form input {
             background: rgba(15, 18, 35, 0.75);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
@@ -110,7 +108,8 @@
 
         .post-form input:focus,
         .post-form select:focus,
-        .post-form textarea:focus {
+        .post-form textarea:focus,
+        .comment-form input:focus {
             border-color: #38bdf8;
         }
 
@@ -145,6 +144,7 @@
             background: rgba(255, 255, 255, 0.04);
             padding: 12px 16px;
             border-radius: 16px;
+            box-sizing: border-box;
         }
 
         .filter-buttons {
@@ -198,6 +198,7 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 18px;
             padding: 18px 20px;
+            box-sizing: border-box;
         }
 
         .post-header {
@@ -263,25 +264,24 @@
             gap: 10px;
             padding-top: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 14px;
         }
 
-        .contact-btn {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.45);
+        .post-contact {
             color: #6ee7b7;
-            padding: 7px 15px;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
             font-weight: 600;
-            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
-        .contact-btn:hover {
-            background: rgba(16, 185, 129, 0.35);
+        .post-contact a {
+            color: #6ee7b7;
+            text-decoration: none;
+        }
+
+        .post-contact a:hover {
+            text-decoration: underline;
         }
 
         .toggle-comments-btn {
@@ -293,55 +293,39 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 13px;
             cursor: pointer;
+            transition: background 0.2s;
         }
 
-        /* Rozwijany boks kontaktu */
-        .private-msg-box {
-            display: none;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            border-radius: 14px;
-            padding: 14px;
-            margin-top: 12px;
+        .toggle-comments-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
         }
 
-        .private-msg-box.open {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .private-msg-send {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 9px 18px;
-            border-radius: 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            cursor: pointer;
-            align-self: flex-end;
-        }
-
-        /* Sekcja komentarzy */
+        /* Sekcja komentarzy pod postem */
         .comments-container {
             display: none;
-            margin-top: 14px;
-            padding-top: 14px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.12);
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.15);
+            box-sizing: border-box;
         }
 
         .comments-container.open {
             display: block;
         }
 
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
         .comment-item {
-            background: rgba(0, 0, 0, 0.35);
-            border-left: 3px solid #38bdf8;
-            padding: 9px 13px;
-            border-radius: 6px 10px 10px 6px;
+            background: rgba(15, 18, 35, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 14px;
+            border-radius: 12px;
             font-size: 13px;
-            margin-bottom: 8px;
         }
 
         .comment-meta {
@@ -354,20 +338,28 @@
 
         .comment-form {
             display: grid;
-            grid-template-columns: 160px 1fr auto;
-            gap: 8px;
-            margin-top: 10px;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 12px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .comment-btn {
             background: #38bdf8;
             color: #0f172a;
             border: none;
-            padding: 10px 16px;
-            border-radius: 10px;
+            padding: 12px 20px;
+            border-radius: 12px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
+            font-size: 14px;
             cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .comment-btn:hover {
+            background: #7dd3fc;
         }
 
         footer {
@@ -382,7 +374,7 @@
             .container { margin: 15px; padding: 16px; }
             .form-grid-2, .comment-form { grid-template-columns: 1fr; }
             .filter-bar { flex-direction: column; align-items: stretch; }
-            .submit-btn { width: 100%; }
+            .submit-btn, .comment-btn { width: 100%; }
         }
     </style>
 </head>
@@ -396,17 +388,17 @@
 
     <!-- ================= SEKCJA FORUM ================= -->
     <section class="forum-section" id="forumSection">
-        <div class="forum-title"><i class="fas fa-users"></i> Tablica współdzielenia kont</div>
+        <div class="forum-title"><i class="fas fa-users"></i> TABLICA OGŁOSZEŃ</div>
 
         <!-- Formularz nowego ogłoszenia -->
         <div class="post-form">
             <select id="postType">
                 <option value="SZUKAM">🔍 SZUKAM MIEJSCA NA PLATFORMIE</option>
-                <option value="OFERUJĘ">🟢 MAM WOLNE MIEJSCE (OFERUJĘ)</option>
+                <option value="OFERUJĘ">🟢 MAM WOLNE MIEJSCE NA PLATFORMIE</option>
             </select>
             <div class="form-grid-2">
                 <input type="text" id="nickname" placeholder="Twój nick (np. Marek)" maxlength="35">
-                <input type="text" id="contact" placeholder="Twój e-mail(ukryty do kontaktu)" maxlength="120">
+                <input type="text" id="contact" placeholder="Twój e-mail / kontakt (widoczny dla wszystkich)" maxlength="120">
             </div>
             <textarea id="postInput" rows="3" placeholder="Wpisz szczegóły ogłoszenia..." maxlength="500"></textarea>
             <button type="button" class="submit-btn" onclick="addPost()">
@@ -436,21 +428,13 @@
         addDoc,
         doc,
         updateDoc,
+        deleteDoc,
         arrayUnion,
         query,
         orderBy,
         onSnapshot,
         serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    // Opcjonalna konfiguracja EmailJS (do wysyłki e-maili w tle bez otwierania programu pocztowego)
-    const EMAILJS_PUBLIC_KEY = "";
-    const EMAILJS_SERVICE_ID = "";
-    const EMAILJS_TEMPLATE_ID = "";
-
-    if (EMAILJS_PUBLIC_KEY && window.emailjs) {
-        window.emailjs.init(EMAILJS_PUBLIC_KEY);
-    }
 
     const firebaseConfig = {
         apiKey: "AIzaSyALbBW9S9BdFaZvvHiW_TXvar6ZtnUhvvI",
@@ -466,10 +450,14 @@
 
     let allPosts = [];
     let currentTypeFilter = "ALL";
-
     const openCommentSections = new Set();
-    const openContactBoxes = new Set();
-    const hiddenContacts = {};
+
+    // Bezpieczne pobieranie daty (odporne na lokalny cache Firebase i wartości null)
+    function getSafeDate(field) {
+        if (!field) return null;
+        if (typeof field.toDate === 'function') return field.toDate();
+        return new Date(field);
+    }
 
     window.setTypeFilter = function (type, btnElement) {
         currentTypeFilter = type;
@@ -480,7 +468,41 @@
         renderPosts();
     };
 
-    // Dodawanie ogłoszenia
+    // Inteligentne czyszczenie przeterminowanych postów
+    async function cleanupExpiredPosts(postsSnapshot) {
+        try {
+            const now = new Date();
+            const deletePromises = [];
+
+            postsSnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                let isExpired = false;
+
+                const expireDate = getSafeDate(data.expiresAt);
+                const createDate = getSafeDate(data.createdAt);
+
+                if (expireDate) {
+                    if (now > expireDate) isExpired = true;
+                } else if (createDate) {
+                    const diffDays = (now - createDate) / (1000 * 60 * 60 * 24);
+                    if (diffDays > 30) isExpired = true;
+                }
+
+                if (isExpired) {
+                    deletePromises.push(deleteDoc(doc(db, "posts", docSnap.id)));
+                }
+            });
+
+            if (deletePromises.length > 0) {
+                await Promise.all(deletePromises);
+                console.log(`Usunięto ${deletePromises.length} przeterminowanych/starych postów.`);
+            }
+        } catch (error) {
+            console.error("Błąd podczas czyszczenia starych postów:", error);
+        }
+    }
+
+    // Dodawanie ogłoszenia z automatycznym wygaśnięciem po 30 dniach
     window.addPost = async function () {
         const postType = document.getElementById("postType").value;
         const nickname = document.getElementById("nickname").value.trim();
@@ -495,16 +517,22 @@
         const prefix = `[${postType}] `;
         const finalText = (prefix + rawText).slice(0, 500);
 
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 30);
+
         try {
             await addDoc(collection(db, "posts"), {
                 nickname: nickname || "Anonim",
-                contact: contact || "",
+                contact: contact || "Brak kontaktu",
                 text: finalText,
                 comments: [],
-                createdAt: serverTimestamp()
+                createdAt: serverTimestamp(),
+                expiresAt: expirationDate
             });
 
             document.getElementById("postInput").value = "";
+            document.getElementById("contact").value = "";
+            document.getElementById("nickname").value = "";
         } catch (error) {
             console.error("Błąd dodawania ogłoszenia:", error);
             alert("Nie udało się dodać ogłoszenia. Sprawdź reguły w konsoli Firebase.");
@@ -515,55 +543,10 @@
         const el = document.getElementById(`comments-${postId}`);
         if (!el) return;
         el.classList.toggle("open");
-        if (el.classList.contains("open")) openCommentSections.add(postId);
-        else openCommentSections.delete(postId);
-    };
-
-    window.toggleContactBox = function (postId) {
-        const el = document.getElementById(`contact-box-${postId}`);
-        if (!el) return;
-        el.classList.toggle("open");
-        if (el.classList.contains("open")) openContactBoxes.add(postId);
-        else openContactBoxes.delete(postId);
-    };
-
-    // Zgłoszenie się do ogłoszenia (wysyłka e-maila lub otwarcie linku)
-    window.sendMatchRequest = async function (postId, authorNick) {
-        const replyContact = document.getElementById(`sender-reply-${postId}`).value.trim();
-        const msg = document.getElementById(`sender-msg-${postId}`).value.trim();
-        const targetContact = hiddenContacts[postId] || "";
-
-        if (!replyContact || !msg) {
-            alert("Podaj swój kontakt zwrotny i krótką wiadomość.");
-            return;
-        }
-
-        const isEmail = targetContact.includes("@") && !targetContact.includes(" ");
-
-        if (isEmail && EMAILJS_PUBLIC_KEY && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID) {
-            try {
-                await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                    to_email: targetContact,
-                    to_name: authorNick,
-                    reply_to: replyContact,
-                    message: msg
-                });
-                alert("Wiadomość wysłana bezpośrednio na e-mail autora!");
-                toggleContactBox(postId);
-                return;
-            } catch (e) {
-                console.error("Błąd EmailJS:", e);
-            }
-        }
-
-        if (isEmail) {
-            const subject = encodeURIComponent(`WatchSmart: Zgłoszenie do wspólnej subskrypcji`);
-            const body = encodeURIComponent(`Cześć ${authorNick}!\n\nPiszę w sprawie Twojego ogłoszenia na WatchSmart:\n"${msg}"\n\nMój kontakt zwrotny: ${replyContact}`);
-            window.location.href = `mailto:${targetContact}?subject=${subject}&body=${body}`;
-        } else if (targetContact.startsWith("http://") || targetContact.startsWith("https://")) {
-            window.open(targetContact, "_blank", "noopener,noreferrer");
+        if (el.classList.contains("open")) {
+            openCommentSections.add(postId);
         } else {
-            alert(`Namiar podany przez autora (${authorNick}): ${targetContact}`);
+            openCommentSections.delete(postId);
         }
     };
 
@@ -592,17 +575,32 @@
             openCommentSections.add(postId);
         } catch (error) {
             console.error("Błąd dodawania komentarza:", error);
-            alert("Nie udało się dodać komentarza.");
+            alert("Nie udało się dodać komentarza. Sprawdź reguły Firestore.");
         }
     };
 
     const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
 
     onSnapshot(q, (snapshot) => {
+        // Uruchamiamy czyszczenie w tle
+        cleanupExpiredPosts(snapshot);
+
         allPosts = [];
+        const now = new Date();
+
         snapshot.forEach((docSnap) => {
-            allPosts.push({ id: docSnap.id, ...docSnap.data() });
+            const data = docSnap.data();
+            
+            const expireDate = getSafeDate(data.expiresAt);
+            const createDate = getSafeDate(data.createdAt);
+
+            // Natychmiastowe ukrywanie przeterminowanych postów
+            if (expireDate && now > expireDate) return;
+            if (!expireDate && createDate && (now - createDate) / (1000 * 60 * 60 * 24) > 30) return;
+
+            allPosts.push({ id: docSnap.id, ...data });
         });
+        
         renderPosts();
     });
 
@@ -633,9 +631,8 @@
             const div = document.createElement("div");
             div.className = "post-card";
 
-            const date = post.createdAt?.toDate
-                ? post.createdAt.toDate().toLocaleString("pl-PL")
-                : "przed chwilą";
+            const postDate = getSafeDate(post.createdAt);
+            const dateStr = postDate ? postDate.toLocaleString("pl-PL") : "przed chwilą";
 
             const safeNickname = escapeHtml(post.nickname || "Anonim");
             let displayText = post.text || "";
@@ -652,11 +649,10 @@
             }
 
             const rawContact = (post.contact || "").trim();
-            if (rawContact) hiddenContacts[postId] = rawContact;
+            const contactHtml = formatContact(rawContact);
 
-            const isContactOpen = openContactBoxes.has(postId) ? "open" : "";
-            const isCommentsOpen = openCommentSections.has(postId) ? "open" : "";
             const comments = Array.isArray(post.comments) ? post.comments : [];
+            const isCommentsOpen = openCommentSections.has(postId) ? "open" : "";
 
             const commentsHtml = comments.length > 0
                 ? comments.map(c => `
@@ -668,7 +664,7 @@
                         <div>${escapeHtml(c.text || "")}</div>
                     </div>
                 `).join("")
-                : `<div style="font-size:13px; opacity:0.5; margin-bottom:10px;">Brak zgłoszeń w komentarzach. Napisz pierwszy!</div>`;
+                : `<div style="font-size:13px; opacity:0.5; margin-bottom:10px;">Brak odpowiedzi. Bądź pierwszy!</div>`;
 
             div.innerHTML = `
                 <div class="post-header">
@@ -676,41 +672,25 @@
                         <span class="post-author"><i class="fas fa-user"></i> ${safeNickname}</span>
                         ${badgeTypeHtml}
                     </div>
-                    <div class="post-date">${date}</div>
+                    <div class="post-date">${dateStr}</div>
                 </div>
 
                 <div class="post-text">${escapeHtml(displayText)}</div>
 
                 <div class="post-footer">
-                    ${rawContact ? `
-                        <button type="button" class="contact-btn" onclick="toggleContactBox('${postId}')">
-                            <i class="fas fa-handshake"></i> Zgłoś się / Kontakt
-                        </button>
-                    ` : `<span style="font-size:12px; opacity:0.5;">Kontakt przez komentarz poniżej</span>`}
-
+                    <div class="post-contact">
+                        <i class="fas fa-envelope"></i> Kontakt: ${contactHtml}
+                    </div>
                     <button type="button" class="toggle-comments-btn" onclick="toggleComments('${postId}')">
                         <i class="far fa-comments"></i> Odpowiedzi (${comments.length})
                     </button>
                 </div>
 
-                ${rawContact ? `
-                <div class="private-msg-box ${isContactOpen}" id="contact-box-${postId}">
-                    <div style="font-size: 13px; color: #6ee7b7;">
-                        <i class="fas fa-shield-alt"></i> Napisz bezpośrednio do użytkownika <strong>${safeNickname}</strong>:
-                    </div>
-                    <input type="text" id="sender-reply-${postId}" placeholder="Twój e-mail, telefon lub link do FB (do odpowiedzi)">
-                    <textarea id="sender-msg-${postId}" rows="2" placeholder="Cześć! Jestem chętny na wspólne konto..."></textarea>
-                    <button type="button" class="private-msg-send" onclick="sendMatchRequest('${postId}', '${safeNickname}')">
-                        <i class="fas fa-paper-plane"></i> Skontaktuj się teraz
-                    </button>
-                </div>
-                ` : ""}
-
                 <div class="comments-container ${isCommentsOpen}" id="comments-${postId}">
-                    <div>${commentsHtml}</div>
+                    <div class="comments-list">${commentsHtml}</div>
                     <div class="comment-form">
                         <input type="text" id="comment-nick-${postId}" placeholder="Twój nick" maxlength="35">
-                        <input type="text" id="comment-text-${postId}" placeholder="Zostaw odpowiedź lub kontakt..." maxlength="300">
+                        <input type="text" id="comment-text-${postId}" placeholder="Napisz odpowiedź..." maxlength="300">
                         <button type="button" class="comment-btn" onclick="addComment('${postId}')">Wyślij</button>
                     </div>
                 </div>
@@ -724,6 +704,22 @@
         const div = document.createElement("div");
         div.innerText = text;
         return div.innerHTML;
+    }
+
+    function formatContact(contact) {
+        if (!contact) return "Brak";
+        const trimmed = contact.trim();
+        const safeText = escapeHtml(trimmed);
+
+        if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+            return `<a href="${safeText}" target="_blank" rel="noopener noreferrer">${safeText}</a>`;
+        }
+
+        if (trimmed.includes("@") && !trimmed.includes(" ")) {
+            return `<a href="mailto:${safeText}">${safeText}</a>`;
+        }
+
+        return safeText;
     }
 </script>
 
