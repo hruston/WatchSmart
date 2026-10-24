@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WatchSmart - Współdzielenie Platform</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            background: url("https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Background.jpg") center/cover no-repeat fixed;
+            background-color: #323568;
+            color: white;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.65);
+            padding: 10px 20px;
+            border-radius: 30px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 80px;
+            max-width: 1000px;
+            margin: 20px auto 0 auto;
+            box-sizing: border-box;
+            backdrop-filter: blur(6px);
+        }
+
+        .logo {
+            height: 70px;
+            max-height: 100%;
+            width: auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 25px auto 50px auto;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 28px;
+            border-radius: 30px;
+            backdrop-filter: blur(8px);
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        /* ================= FORUM WSPÓŁDZIELENIA ================= */
+        .forum-section {
+            margin-top: 10px;
+        }
+
+        .forum-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        /* Formularz dodawania ogłoszenia */
+        .post-form {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 780px;
+            margin: 0 auto 30px auto;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .post-form input,
+        .post-form select,
+        .post-form textarea,
+        .comment-form input,
+        .private-msg-box input,
+        .private-msg-box textarea {
+            background: rgba(15, 18, 35, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .post-form select option {
+            background: #1e2246;
+            color: white;
+        }
+
+        .post-form input:focus,
+        .post-form select:focus,
+        .post-form textarea:focus {
+            border-color: #38bdf8;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            align-self: flex-end;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
+
+        /* Pasek filtrów nad ogłoszeniami */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 780px;
+            margin: 0 auto 20px auto;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 12px 16px;
+            border-radius: 16px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 7px 14px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+        }
+
+        .search-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 7px 14px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            outline: none;
+            min-width: 200px;
+        }
+
+        /* Karta pojedynczego ogłoszenia */
+        #postsList {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .post-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 18px 20px;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .post-badges {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge-type {
+            padding: 4px 11px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-offer {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            color: #6ee7b7;
+        }
+
+        .badge-seek {
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid #38bdf8;
+            color: #7dd3fc;
+        }
+
+        .post-author {
+            font-weight: 700;
+            color: #e2e8f0;
+            font-size: 15px;
+        }
+
+        .post-date {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .post-text {
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .contact-btn {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            color: #6ee7b7;
+            padding: 7px 15px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contact-btn:hover {
+            background: rgba(16, 185, 129, 0.35);
+        }
+
+        .toggle-comments-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 7px 14px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* Rozwijany boks kontaktu */
+        .private-msg-box {
+            display: none;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 14px;
+            padding: 14px;
+            margin-top: 12px;
+        }
+
+        .private-msg-box.open {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .private-msg-send {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+
+        /* Sekcja komentarzy */
+        .comments-container {
+            display: none;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.12);
+        }
+
+        .comments-container.open {
+            display: block;
+        }
+
+        .comment-item {
+            background: rgba(0, 0, 0, 0.35);
+            border-left: 3px solid #38bdf8;
+            padding: 9px 13px;
+            border-radius: 6px 10px 10px 6px;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .comment-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 4px;
+            color: #93c5fd;
+        }
+
+        .comment-form {
+            display: grid;
+            grid-template-columns: 160px 1fr auto;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .comment-btn {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 0;
+            font-size: 15px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            body { background-attachment: scroll; }
+            .container { margin: 15px; padding: 16px; }
+            .form-grid-2, .comment-form { grid-template-columns: 1fr; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .submit-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/logo1.png" alt="WatchSmart" class="logo">
+</header>
+
+<main class="container">
+
+    <!-- ================= SEKCJA FORUM ================= -->
+    <section class="forum-section" id="forumSection">
+        <div class="forum-title"><i class="fas fa-users"></i> Tablica współdzielenia kont</div>
+
+        <!-- Formularz nowego ogłoszenia -->
+        <div class="post-form">
+            <select id="postType">
+                <option value="SZUKAM">🔍 SZUKAM MIEJSCA NA PLATFORMIE</option>
+                <option value="OFERUJĘ">🟢 MAM WOLNE MIEJSCE (OFERUJĘ)</option>
+            </select>
+            <div class="form-grid-2">
+                <input type="text" id="nickname" placeholder="Twój nick (np. Marek)" maxlength="35">
+                <input type="text" id="contact" placeholder="Twój e-mail lub link do FB (ukryty do kontaktu)" maxlength="120">
+            </div>
+            <textarea id="postInput" rows="3" placeholder="Wpisz szczegóły ogłoszenia..." maxlength="500"></textarea>
+            <button type="button" class="submit-btn" onclick="addPost()">
+                <i class="fas fa-plus-circle"></i> Dodaj ogłoszenie
+            </button>
+        </div>
+
+        <!-- Pasek filtrów nad ogłoszeniami -->
+        <div class="filter-bar">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="setTypeFilter('ALL', this)">Wszystkie</button>
+                <button class="filter-btn" onclick="setTypeFilter('OFERUJĘ', this)">🟢 Oferują miejsce</button>
+                <button class="filter-btn" onclick="setTypeFilter('SZUKAM', this)">🔍 Szukają miejsca</button>
+            </div>
+            <input type="text" id="searchInput" class="search-box" placeholder="Szukaj w ogłoszeniach..." oninput="renderPosts()">
+        </div>
+
+        <div id="postsList"></div>
+    </section>
+</main>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+        getFirestore,
+        collection,
+        addDoc,
+        doc,
+        updateDoc,
+        arrayUnion,
+        query,
+        orderBy,
+        onSnapshot,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // Opcjonalna konfiguracja EmailJS (do wysyłki e-maili w tle bez otwierania programu pocztowego)
+    const EMAILJS_PUBLIC_KEY = "";
+    const EMAILJS_SERVICE_ID = "";
+    const EMAILJS_TEMPLATE_ID = "";
+
+    if (EMAILJS_PUBLIC_KEY && window.emailjs) {
+        window.emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyALbBW9S9BdFaZvvHiW_TXvar6ZtnUhvvI",
+        authDomain: "watchsmart-50fb9.firebaseapp.com",
+        projectId: "watchsmart-50fb9",
+        storageBucket: "watchsmart-50fb9.firebasestorage.app",
+        messagingSenderId: "498356410021",
+        appId: "1:498356410021:web:b681e4212e0bd2d0171f4c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let allPosts = [];
+    let currentTypeFilter = "ALL";
+
+    const openCommentSections = new Set();
+    const openContactBoxes = new Set();
+    const hiddenContacts = {};
+
+    window.setTypeFilter = function (type, btnElement) {
+        currentTypeFilter = type;
+        document.querySelectorAll('.filter-buttons .filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        btnElement.classList.add('active');
+        renderPosts();
+    };
+
+    // Dodawanie ogłoszenia
+    window.addPost = async function () {
+        const postType = document.getElementById("postType").value;
+        const nickname = document.getElementById("nickname").value.trim();
+        const contact = document.getElementById("contact").value.trim();
+        const rawText = document.getElementById("postInput").value.trim();
+
+        if (rawText.length < 3) {
+            alert("Opisz krótko swoje ogłoszenie (min. 3 znaki).");
+            return;
+        }
+
+        const prefix = `[${postType}] `;
+        const finalText = (prefix + rawText).slice(0, 500);
+
+        try {
+            await addDoc(collection(db, "posts"), {
+                nickname: nickname || "Anonim",
+                contact: contact || "",
+                text: finalText,
+                comments: [],
+                createdAt: serverTimestamp()
+            });
+
+            document.getElementById("postInput").value = "";
+        } catch (error) {
+            console.error("Błąd dodawania ogłoszenia:", error);
+            alert("Nie udało się dodać ogłoszenia. Sprawdź reguły w konsoli Firebase.");
+        }
+    };
+
+    window.toggleComments = function (postId) {
+        const el = document.getElementById(`comments-${postId}`);
+        if (!el) return;
+        el.classList.toggle("open");
+        if (el.classList.contains("open")) openCommentSections.add(postId);
+        else openCommentSections.delete(postId);
+    };
+
+    window.toggleContactBox = function (postId) {
+        const el = document.getElementById(`contact-box-${postId}`);
+        if (!el) return;
+        el.classList.toggle("open");
+        if (el.classList.contains("open")) openContactBoxes.add(postId);
+        else openContactBoxes.delete(postId);
+    };
+
+    // Zgłoszenie się do ogłoszenia (wysyłka e-maila lub otwarcie linku)
+    window.sendMatchRequest = async function (postId, authorNick) {
+        const replyContact = document.getElementById(`sender-reply-${postId}`).value.trim();
+        const msg = document.getElementById(`sender-msg-${postId}`).value.trim();
+        const targetContact = hiddenContacts[postId] || "";
+
+        if (!replyContact || !msg) {
+            alert("Podaj swój kontakt zwrotny i krótką wiadomość.");
+            return;
+        }
+
+        const isEmail = targetContact.includes("@") && !targetContact.includes(" ");
+
+        if (isEmail && EMAILJS_PUBLIC_KEY && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID) {
+            try {
+                await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                    to_email: targetContact,
+                    to_name: authorNick,
+                    reply_to: replyContact,
+                    message: msg
+                });
+                alert("Wiadomość wysłana bezpośrednio na e-mail autora!");
+                toggleContactBox(postId);
+                return;
+            } catch (e) {
+                console.error("Błąd EmailJS:", e);
+            }
+        }
+
+        if (isEmail) {
+            const subject = encodeURIComponent(`WatchSmart: Zgłoszenie do wspólnej subskrypcji`);
+            const body = encodeURIComponent(`Cześć ${authorNick}!\n\nPiszę w sprawie Twojego ogłoszenia na WatchSmart:\n"${msg}"\n\nMój kontakt zwrotny: ${replyContact}`);
+            window.location.href = `mailto:${targetContact}?subject=${subject}&body=${body}`;
+        } else if (targetContact.startsWith("http://") || targetContact.startsWith("https://")) {
+            window.open(targetContact, "_blank", "noopener,noreferrer");
+        } else {
+            alert(`Namiar podany przez autora (${authorNick}): ${targetContact}`);
+        }
+    };
+
+    window.addComment = async function (postId) {
+        const nickEl = document.getElementById(`comment-nick-${postId}`);
+        const textEl = document.getElementById(`comment-text-${postId}`);
+
+        const nickname = nickEl.value.trim() || "Chętny";
+        const text = textEl.value.trim();
+
+        if (text.length < 2) {
+            alert("Wpisz treść komentarza.");
+            return;
+        }
+
+        try {
+            const postRef = doc(db, "posts", postId);
+            await updateDoc(postRef, {
+                comments: arrayUnion({
+                    nickname: nickname,
+                    text: text,
+                    createdAt: new Date().toLocaleString("pl-PL")
+                })
+            });
+            textEl.value = "";
+            openCommentSections.add(postId);
+        } catch (error) {
+            console.error("Błąd dodawania komentarza:", error);
+            alert("Nie udało się dodać komentarza.");
+        }
+    };
+
+    const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+
+    onSnapshot(q, (snapshot) => {
+        allPosts = [];
+        snapshot.forEach((docSnap) => {
+            allPosts.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        renderPosts();
+    });
+
+    window.renderPosts = function () {
+        const postsList = document.getElementById("postsList");
+        const searchQuery = (document.getElementById("searchInput")?.value || "").toLowerCase();
+        postsList.innerHTML = "";
+
+        const filtered = allPosts.filter(post => {
+            const textUpper = (post.text || "").toUpperCase();
+            const textLower = (post.text || "").toLowerCase();
+            const nickLower = (post.nickname || "").toLowerCase();
+
+            if (currentTypeFilter === "OFERUJĘ" && !textUpper.includes("OFERUJ")) return false;
+            if (currentTypeFilter === "SZUKAM" && !textUpper.includes("SZUKAM")) return false;
+            if (searchQuery && !textLower.includes(searchQuery) && !nickLower.includes(searchQuery)) return false;
+
+            return true;
+        });
+
+        if (filtered.length === 0) {
+            postsList.innerHTML = `<p style="text-align:center; opacity:0.6; padding: 20px;">Brak pasujących ogłoszeń. Dodaj swoje powyżej!</p>`;
+            return;
+        }
+
+        filtered.forEach(post => {
+            const postId = post.id;
+            const div = document.createElement("div");
+            div.className = "post-card";
+
+            const date = post.createdAt?.toDate
+                ? post.createdAt.toDate().toLocaleString("pl-PL")
+                : "przed chwilą";
+
+            const safeNickname = escapeHtml(post.nickname || "Anonim");
+            let displayText = post.text || "";
+            let badgeTypeHtml = "";
+
+            const tagMatch = displayText.match(/^\[(SZUKAM|OFERUJĘ)\]\s*/i);
+            if (tagMatch) {
+                const mode = tagMatch[1].toUpperCase();
+                displayText = displayText.replace(tagMatch[0], "");
+
+                badgeTypeHtml = mode === "OFERUJĘ"
+                    ? `<span class="badge-type badge-offer">🟢 Wolne miejsce</span>`
+                    : `<span class="badge-type badge-seek">🔍 Szukam miejsca</span>`;
+            }
+
+            const rawContact = (post.contact || "").trim();
+            if (rawContact) hiddenContacts[postId] = rawContact;
+
+            const isContactOpen = openContactBoxes.has(postId) ? "open" : "";
+            const isCommentsOpen = openCommentSections.has(postId) ? "open" : "";
+            const comments = Array.isArray(post.comments) ? post.comments : [];
+
+            const commentsHtml = comments.length > 0
+                ? comments.map(c => `
+                    <div class="comment-item">
+                        <div class="comment-meta">
+                            <strong><i class="fas fa-user-circle"></i> ${escapeHtml(c.nickname || "Anonim")}</strong>
+                            <span>${escapeHtml(c.createdAt || "")}</span>
+                        </div>
+                        <div>${escapeHtml(c.text || "")}</div>
+                    </div>
+                `).join("")
+                : `<div style="font-size:13px; opacity:0.5; margin-bottom:10px;">Brak zgłoszeń w komentarzach. Napisz pierwszy!</div>`;
+
+            div.innerHTML = `
+                <div class="post-header">
+                    <div class="post-badges">
+                        <span class="post-author"><i class="fas fa-user"></i> ${safeNickname}</span>
+                        ${badgeTypeHtml}
+                    </div>
+                    <div class="post-date">${date}</div>
+                </div>
+
+                <div class="post-text">${escapeHtml(displayText)}</div>
+
+                <div class="post-footer">
+                    ${rawContact ? `
+                        <button type="button" class="contact-btn" onclick="toggleContactBox('${postId}')">
+                            <i class="fas fa-handshake"></i> Zgłoś się / Kontakt
+                        </button>
+                    ` : `<span style="font-size:12px; opacity:0.5;">Kontakt przez komentarz poniżej</span>`}
+
+                    <button type="button" class="toggle-comments-btn" onclick="toggleComments('${postId}')">
+                        <i class="far fa-comments"></i> Odpowiedzi (${comments.length})
+                    </button>
+                </div>
+
+                ${rawContact ? `
+                <div class="private-msg-box ${isContactOpen}" id="contact-box-${postId}">
+                    <div style="font-size: 13px; color: #6ee7b7;">
+                        <i class="fas fa-shield-alt"></i> Napisz bezpośrednio do użytkownika <strong>${safeNickname}</strong>:
+                    </div>
+                    <input type="text" id="sender-reply-${postId}" placeholder="Twój e-mail, telefon lub link do FB (do odpowiedzi)">
+                    <textarea id="sender-msg-${postId}" rows="2" placeholder="Cześć! Jestem chętny na wspólne konto..."></textarea>
+                    <button type="button" class="private-msg-send" onclick="sendMatchRequest('${postId}', '${safeNickname}')">
+                        <i class="fas fa-paper-plane"></i> Skontaktuj się teraz
+                    </button>
+                </div>
+                ` : ""}
+
+                <div class="comments-container ${isCommentsOpen}" id="comments-${postId}">
+                    <div>${commentsHtml}</div>
+                    <div class="comment-form">
+                        <input type="text" id="comment-nick-${postId}" placeholder="Twój nick" maxlength="35">
+                        <input type="text" id="comment-text-${postId}" placeholder="Zostaw odpowiedź lub kontakt..." maxlength="300">
+                        <button type="button" class="comment-btn" onclick="addComment('${postId}')">Wyślij</button>
+                    </div>
+                </div>
+            `;
+
+            postsList.appendChild(div);
+        });
+    };
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.innerText = text;
+        return div.innerHTML;
+    }
+</script>
+
+<footer>&copy; 2026 WatchSmart</footer>
+
+</body>
+</html>
