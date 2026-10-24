@@ -7,145 +7,158 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Zmiana czcionki na bardzo nowoczesny i czytelny krój 'Inter' -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        :root {
+            --bg-color: #09090b;
+            --surface-color: #18181b;
+            --surface-hover: #27272a;
+            --border-color: #27272a;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --accent-primary: #6366f1;
+            --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --offer-color: #34d399;
+            --offer-bg: rgba(16, 185, 129, 0.1);
+            --seek-color: #818cf8;
+            --seek-bg: rgba(99, 102, 241, 0.1);
+        }
+
         body {
             margin: 0;
             padding: 0;
             width: 100%;
             min-height: 100vh;
-            font-family: 'Montserrat', sans-serif;
-            background: url("https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Background.jpg") center/cover no-repeat fixed;
-            background-color: #323568;
-            color: white;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top, rgba(99, 102, 241, 0.08), transparent 40%);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
         }
 
         header {
-            background: rgba(0, 0, 0, 0.65);
-            padding: 10px 20px;
-            border-radius: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
+            display: flex;
             justify-content: center;
             align-items: center;
-            display: flex;
-            height: 80px;
-            max-width: 1000px;
-            margin: 20px auto 0 auto;
+            height: 70px;
             box-sizing: border-box;
-            backdrop-filter: blur(6px);
         }
 
         .logo {
-            height: 70px;
-            max-height: 100%;
+            height: 45px;
             width: auto;
         }
 
         .container {
-            max-width: 1000px;
-            margin: 25px auto 50px auto;
-            background: rgba(0, 0, 0, 0.75);
-            padding: 28px;
-            border-radius: 30px;
-            backdrop-filter: blur(8px);
-            font-size: 16px;
+            max-width: 800px;
+            margin: 40px auto 60px auto;
+            padding: 0 20px;
             box-sizing: border-box;
-        }
-
-        /* ================= FORUM WSPÓŁDZIELENIA ================= */
-        .forum-section {
-            margin-top: 10px;
         }
 
         .forum-title {
             text-align: center;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 22px;
+            letter-spacing: -0.5px;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Formularz dodawania ogłoszenia */
+        /* ========== FORMULARZ ========== */
         .post-form {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            padding: 20px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 24px;
             border-radius: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-width: 780px;
-            margin: 0 auto 30px auto;
-            box-sizing: border-box;
+            gap: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
         }
 
         .form-grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 16px;
         }
 
         .post-form input,
         .post-form select,
         .post-form textarea,
         .comment-form input {
-            background: rgba(15, 18, 35, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 12px 14px;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
+            padding: 14px 16px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             font-size: 14px;
             outline: none;
             width: 100%;
             box-sizing: border-box;
+            transition: all 0.2s ease;
         }
 
         .post-form select option {
-            background: #1e2246;
-            color: white;
+            background: var(--surface-color);
+            color: var(--text-main);
         }
 
         .post-form input:focus,
         .post-form select:focus,
         .post-form textarea:focus,
         .comment-form input:focus {
-            border-color: #38bdf8;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         }
 
         .submit-btn {
-            background: #38bdf8;
-            color: #0f172a;
+            background: var(--accent-gradient);
+            color: white;
             border: none;
-            padding: 12px 26px;
+            padding: 12px 28px;
             border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
             align-self: flex-end;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
         }
 
         .submit-btn:hover {
-            background: #7dd3fc;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+            filter: brightness(1.1);
         }
 
-        /* Pasek filtrów nad ogłoszeniami */
+        /* ========== FILTRY ========== */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 16px;
             justify-content: space-between;
             align-items: center;
-            max-width: 780px;
-            margin: 0 auto 20px auto;
-            background: rgba(255, 255, 255, 0.04);
+            margin-bottom: 24px;
+            background: var(--surface-color);
             padding: 12px 16px;
             border-radius: 16px;
-            box-sizing: border-box;
+            border: 1px solid var(--border-color);
         }
 
         .filter-buttons {
@@ -155,51 +168,66 @@
         }
 
         .filter-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: white;
-            padding: 7px 14px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 16px;
             border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
         }
 
+        .filter-btn:hover {
+            color: var(--text-main);
+            border-color: #52525b;
+        }
+
         .filter-btn.active {
-            background: #38bdf8;
-            color: #0f172a;
-            border-color: #38bdf8;
+            background: var(--text-main);
+            color: var(--bg-color);
+            border-color: var(--text-main);
+            font-weight: 600;
         }
 
         .search-box {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
             border-radius: 50px;
-            padding: 7px 14px;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
+            padding: 8px 16px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             font-size: 13px;
             outline: none;
-            min-width: 200px;
+            min-width: 220px;
+            transition: all 0.2s;
         }
 
-        /* Karta pojedynczego ogłoszenia */
+        .search-box:focus {
+            border-color: var(--accent-primary);
+        }
+
+        /* ========== KARTY OGŁOSZEŃ ========== */
         #postsList {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            max-width: 780px;
-            margin: 0 auto;
+            gap: 20px;
         }
 
         .post-card {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 18px;
-            padding: 18px 20px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
             box-sizing: border-box;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .post-card:hover {
+            border-color: #3f3f46;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
 
         .post-header {
@@ -207,52 +235,62 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
         .post-badges {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
+        .post-author {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .post-author i {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
         .badge-type {
-            padding: 4px 11px;
+            padding: 6px 12px;
             border-radius: 50px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .badge-offer {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid #10b981;
-            color: #6ee7b7;
+            background: var(--offer-bg);
+            color: var(--offer-color);
+            border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
         .badge-seek {
-            background: rgba(56, 189, 248, 0.2);
-            border: 1px solid #38bdf8;
-            color: #7dd3fc;
-        }
-
-        .post-author {
-            font-weight: 700;
-            color: #e2e8f0;
-            font-size: 15px;
+            background: var(--seek-bg);
+            color: var(--seek-color);
+            border: 1px solid rgba(99, 102, 241, 0.2);
         }
 
         .post-date {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.45);
+            color: var(--text-muted);
         }
 
         .post-text {
             font-size: 15px;
-            line-height: 1.5;
-            margin-bottom: 14px;
+            line-height: 1.6;
+            color: #d4d4d8;
+            margin-bottom: 20px;
             white-space: pre-wrap;
             word-wrap: break-word;
         }
@@ -262,52 +300,72 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
             font-size: 14px;
         }
 
         .post-contact {
-            color: #6ee7b7;
-            font-weight: 600;
-            display: inline-flex;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+        }
+
+        .post-contact i {
+            color: var(--text-main);
+        }
+
+        .post-contact a {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .post-contact a:hover {
+            color: var(--accent-primary);
+        }
+
+        .toggle-comments-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .post-contact a {
-            color: #6ee7b7;
-            text-decoration: none;
-        }
-
-        .post-contact a:hover {
-            text-decoration: underline;
-        }
-
-        .toggle-comments-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: white;
-            padding: 7px 14px;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
         .toggle-comments-btn:hover {
-            background: rgba(255, 255, 255, 0.16);
+            background: var(--surface-hover);
+            border-color: #52525b;
         }
 
-        /* Sekcja komentarzy pod postem */
+        /* ========== KOMENTARZE ========== */
         .comments-container {
             display: none;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.15);
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-color);
             box-sizing: border-box;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .comments-container.open {
@@ -317,65 +375,79 @@
         .comments-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: 14px;
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
         .comment-item {
-            background: rgba(15, 18, 35, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 14px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
             border-radius: 12px;
             font-size: 13px;
+            line-height: 1.5;
+            color: #d4d4d8;
         }
 
         .comment-meta {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
-            margin-bottom: 4px;
-            color: #93c5fd;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .comment-meta strong {
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .comment-meta span {
+            color: var(--text-muted);
         }
 
         .comment-form {
             display: grid;
-            grid-template-columns: 1fr 1fr auto;
+            grid-template-columns: 1fr 2fr auto;
             gap: 12px;
             width: 100%;
-            box-sizing: border-box;
         }
 
         .comment-btn {
-            background: #38bdf8;
-            color: #0f172a;
+            background: var(--text-main);
+            color: var(--bg-color);
             border: none;
-            padding: 12px 20px;
+            padding: 12px 24px;
             border-radius: 12px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
             cursor: pointer;
-            transition: background 0.2s;
-            white-space: nowrap;
+            transition: all 0.2s;
         }
 
         .comment-btn:hover {
-            background: #7dd3fc;
+            background: #d4d4d8;
+            transform: translateY(-1px);
         }
 
         footer {
             text-align: center;
-            padding: 35px 0;
-            font-size: 15px;
-            opacity: 0.7;
+            padding: 40px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
         }
 
         @media (max-width: 768px) {
-            body { background-attachment: scroll; }
-            .container { margin: 15px; padding: 16px; }
+            .container { margin-top: 20px; }
             .form-grid-2, .comment-form { grid-template-columns: 1fr; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .submit-btn, .comment-btn { width: 100%; }
+            .post-footer { flex-direction: column; align-items: flex-start; }
+            .toggle-comments-btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -387,34 +459,31 @@
 
 <main class="container">
 
-    <!-- ================= SEKCJA FORUM ================= -->
     <section class="forum-section" id="forumSection">
-        <div class="forum-title"><i class="fas fa-users"></i> TABLICA OGŁOSZEŃ</div>
+        <div class="forum-title">Współdzielenie Platform</div>
 
-        <!-- Formularz nowego ogłoszenia -->
         <div class="post-form">
             <select id="postType">
-                <option value="SZUKAM">🔍 SZUKAM MIEJSCA NA PLATFORMIE</option>
-                <option value="OFERUJĘ">🟢 MAM WOLNE MIEJSCE NA PLATFORMIE</option>
+                <option value="SZUKAM">🔍 Szukam miejsca na platformie</option>
+                <option value="OFERUJĘ">🟢 Oferuję miejsce na platformie</option>
             </select>
             <div class="form-grid-2">
                 <input type="text" id="nickname" placeholder="Twój nick (np. Marek)" maxlength="35">
-                <input type="text" id="contact" placeholder="Twój e-mail / kontakt (widoczny dla wszystkich)" maxlength="120">
+                <input type="text" id="contact" placeholder="Twój e-mail / kontakt" maxlength="120">
             </div>
             <textarea id="postInput" rows="3" placeholder="Wpisz szczegóły ogłoszenia..." maxlength="500"></textarea>
             <button type="button" class="submit-btn" onclick="addPost()">
-                <i class="fas fa-plus-circle"></i> Dodaj ogłoszenie
+                Opublikuj ogłoszenie
             </button>
         </div>
 
-        <!-- Pasek filtrów nad ogłoszeniami -->
         <div class="filter-bar">
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setTypeFilter('ALL', this)">Wszystkie</button>
-                <button class="filter-btn" onclick="setTypeFilter('OFERUJĘ', this)">🟢 Oferują miejsce</button>
-                <button class="filter-btn" onclick="setTypeFilter('SZUKAM', this)">🔍 Szukają miejsca</button>
+                <button class="filter-btn" onclick="setTypeFilter('OFERUJĘ', this)">Oferują miejsce</button>
+                <button class="filter-btn" onclick="setTypeFilter('SZUKAM', this)">Szukają miejsca</button>
             </div>
-            <input type="text" id="searchInput" class="search-box" placeholder="Szukaj w ogłoszeniach..." oninput="renderPosts()">
+            <input type="text" id="searchInput" class="search-box" placeholder="Szukaj ogłoszeń..." oninput="renderPosts()">
         </div>
 
         <div id="postsList"></div>
@@ -424,17 +493,8 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
-        getFirestore,
-        collection,
-        addDoc,
-        doc,
-        updateDoc,
-        deleteDoc,
-        arrayUnion,
-        query,
-        orderBy,
-        onSnapshot,
-        serverTimestamp
+        getFirestore, collection, addDoc, doc, updateDoc, deleteDoc,
+        arrayUnion, query, orderBy, onSnapshot, serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -453,7 +513,6 @@
     let currentTypeFilter = "ALL";
     const openCommentSections = new Set();
 
-    // Bezpieczne pobieranie daty (odporne na lokalny cache Firebase i wartości null)
     function getSafeDate(field) {
         if (!field) return null;
         if (typeof field.toDate === 'function') return field.toDate();
@@ -469,31 +528,25 @@
         renderPosts();
     };
 
-    // Inteligentne czyszczenie przeterminowanych postów
     async function cleanupExpiredPosts(postsSnapshot) {
         try {
             const now = new Date();
             const deletePromises = [];
-
             postsSnapshot.forEach((docSnap) => {
                 const data = docSnap.data();
                 let isExpired = false;
-
                 const expireDate = getSafeDate(data.expiresAt);
                 const createDate = getSafeDate(data.createdAt);
-
                 if (expireDate) {
                     if (now > expireDate) isExpired = true;
                 } else if (createDate) {
                     const diffDays = (now - createDate) / (1000 * 60 * 60 * 24);
                     if (diffDays > 30) isExpired = true;
                 }
-
                 if (isExpired) {
                     deletePromises.push(deleteDoc(doc(db, "posts", docSnap.id)));
                 }
             });
-
             if (deletePromises.length > 0) {
                 await Promise.all(deletePromises);
                 console.log(`Usunięto ${deletePromises.length} przeterminowanych/starych postów.`);
@@ -503,7 +556,6 @@
         }
     }
 
-    // Dodawanie ogłoszenia z automatycznym wygaśnięciem po 30 dniach
     window.addPost = async function () {
         const postType = document.getElementById("postType").value;
         const nickname = document.getElementById("nickname").value.trim();
@@ -536,7 +588,7 @@
             document.getElementById("nickname").value = "";
         } catch (error) {
             console.error("Błąd dodawania ogłoszenia:", error);
-            alert("Nie udało się dodać ogłoszenia. Sprawdź reguły w konsoli Firebase.");
+            alert("Nie udało się dodać ogłoszenia.");
         }
     };
 
@@ -555,7 +607,7 @@
         const nickEl = document.getElementById(`comment-nick-${postId}`);
         const textEl = document.getElementById(`comment-text-${postId}`);
 
-        const nickname = nickEl.value.trim() || "Chętny";
+        const nickname = nickEl.value.trim() || "Gość";
         const text = textEl.value.trim();
 
         if (text.length < 2) {
@@ -569,39 +621,34 @@
                 comments: arrayUnion({
                     nickname: nickname,
                     text: text,
-                    createdAt: new Date().toLocaleString("pl-PL")
+                    createdAt: new Date().toLocaleString("pl-PL", { hour: '2-digit', minute:'2-digit', day:'2-digit', month:'2-digit', year:'numeric' })
                 })
             });
             textEl.value = "";
             openCommentSections.add(postId);
         } catch (error) {
             console.error("Błąd dodawania komentarza:", error);
-            alert("Nie udało się dodać komentarza. Sprawdź reguły Firestore.");
+            alert("Nie udało się dodać komentarza.");
         }
     };
 
     const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
 
     onSnapshot(q, (snapshot) => {
-        // Uruchamiamy czyszczenie w tle
         cleanupExpiredPosts(snapshot);
-
         allPosts = [];
         const now = new Date();
 
         snapshot.forEach((docSnap) => {
             const data = docSnap.data();
-            
             const expireDate = getSafeDate(data.expiresAt);
             const createDate = getSafeDate(data.createdAt);
 
-            // Natychmiastowe ukrywanie przeterminowanych postów
             if (expireDate && now > expireDate) return;
             if (!expireDate && createDate && (now - createDate) / (1000 * 60 * 60 * 24) > 30) return;
 
             allPosts.push({ id: docSnap.id, ...data });
         });
-        
         renderPosts();
     });
 
@@ -623,7 +670,7 @@
         });
 
         if (filtered.length === 0) {
-            postsList.innerHTML = `<p style="text-align:center; opacity:0.6; padding: 20px;">Brak pasujących ogłoszeń. Dodaj swoje powyżej!</p>`;
+            postsList.innerHTML = `<div style="text-align:center; padding: 40px 20px; color: var(--text-muted); border: 1px dashed var(--border-color); border-radius: 20px;">Brak pasujących ogłoszeń.</div>`;
             return;
         }
 
@@ -633,7 +680,7 @@
             div.className = "post-card";
 
             const postDate = getSafeDate(post.createdAt);
-            const dateStr = postDate ? postDate.toLocaleString("pl-PL") : "przed chwilą";
+            const dateStr = postDate ? postDate.toLocaleString("pl-PL", { hour: '2-digit', minute:'2-digit', day:'2-digit', month:'2-digit', year:'numeric' }) : "przed chwilą";
 
             const safeNickname = escapeHtml(post.nickname || "Anonim");
             let displayText = post.text || "";
@@ -645,8 +692,8 @@
                 displayText = displayText.replace(tagMatch[0], "");
 
                 badgeTypeHtml = mode === "OFERUJĘ"
-                    ? `<span class="badge-type badge-offer">🟢 Wolne miejsce</span>`
-                    : `<span class="badge-type badge-seek">🔍 Szukam miejsca</span>`;
+                    ? `<span class="badge-type badge-offer">🟢 Oferuję</span>`
+                    : `<span class="badge-type badge-seek">🔍 Szukam</span>`;
             }
 
             const rawContact = (post.contact || "").trim();
@@ -665,12 +712,12 @@
                         <div>${escapeHtml(c.text || "")}</div>
                     </div>
                 `).join("")
-                : `<div style="font-size:13px; opacity:0.5; margin-bottom:10px;">Brak odpowiedzi. Bądź pierwszy!</div>`;
+                : `<div style="font-size:13px; color: var(--text-muted); margin-bottom:10px;">Brak odpowiedzi. Bądź pierwszy!</div>`;
 
             div.innerHTML = `
                 <div class="post-header">
                     <div class="post-badges">
-                        <span class="post-author"><i class="fas fa-user"></i> ${safeNickname}</span>
+                        <span class="post-author"><i class="fas fa-user-circle"></i> ${safeNickname}</span>
                         ${badgeTypeHtml}
                     </div>
                     <div class="post-date">${dateStr}</div>
@@ -680,10 +727,10 @@
 
                 <div class="post-footer">
                     <div class="post-contact">
-                        <i class="fas fa-envelope"></i> Kontakt: ${contactHtml}
+                        <i class="fas fa-at"></i> ${contactHtml}
                     </div>
                     <button type="button" class="toggle-comments-btn" onclick="toggleComments('${postId}')">
-                        <i class="far fa-comments"></i> Odpowiedzi (${comments.length})
+                        <i class="far fa-comment-dots"></i> Komentarze (${comments.length})
                     </button>
                 </div>
 
@@ -713,7 +760,7 @@
         const safeText = escapeHtml(trimmed);
 
         if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
-            return `<a href="${safeText}" target="_blank" rel="noopener noreferrer">${safeText}</a>`;
+            return `<a href="${safeText}" target="_blank" rel="noopener noreferrer">Link zewnętrzny</a>`;
         }
 
         if (trimmed.includes("@") && !trimmed.includes(" ")) {
@@ -724,7 +771,7 @@
     }
 </script>
 
-<footer>&copy; 2026 WatchSmart</footer>
+<footer>&copy; 2026 WatchSmart. Wszelkie prawa zastrzeżone.</footer>
 
 </body>
 </html>
