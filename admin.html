@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WatchSmart - Panel Administratora</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #09090b;
+            --surface-color: #18181b;
+            --surface-hover: #27272a;
+            --border-color: #27272a;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --accent-primary: #ef4444;
+            --accent-gradient: linear-gradient(135deg, #ef4444, #b91c1c);
+            --offer-color: #34d399;
+            --offer-bg: rgba(16, 185, 129, 0.1);
+            --seek-color: #818cf8;
+            --seek-bg: rgba(99, 102, 241, 0.1);
+        }
+
+        body {
+            margin: 0; padding: 0; width: 100%; min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top, rgba(239, 68, 68, 0.08), transparent 40%);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(9, 9, 11, 0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px; 
+            display: flex; 
+            justify-content: center; /* To gwarantuje, że logo jest IDEALNIE na środku */
+            align-items: center;
+            height: 70px; box-sizing: border-box;
+        }
+
+        .logo { height: 45px; width: auto; filter: grayscale(100%) brightness(200%); }
+        .container { max-width: 800px; margin: 40px auto 60px auto; padding: 0 20px; box-sizing: border-box; }
+        .hidden { display: none !important; }
+
+        /* EKRAN LOGOWANIA */
+        #loginScreen {
+            max-width: 400px; margin: 100px auto;
+            background: var(--surface-color); padding: 40px 30px;
+            border-radius: 20px; border: 1px solid var(--border-color);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .login-title { text-align: center; font-size: 24px; font-weight: 700; }
+        #loginScreen input {
+            background: var(--bg-color); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 14px 16px; color: var(--text-main);
+            font-family: 'Inter', sans-serif; font-size: 14px; outline: none; width: 100%; box-sizing: border-box;
+        }
+        #loginScreen input:focus { border-color: var(--accent-primary); }
+        .btn-login {
+            background: var(--accent-gradient); border: none; color: white;
+            padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s;
+        }
+        .btn-login:hover { filter: brightness(1.1); }
+        #loginError { color: #ef4444; font-size: 13px; text-align: center; }
+
+        /* PANEL ADMINA */
+        .admin-title {
+            text-align: center; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;
+            margin-bottom: 30px; background: linear-gradient(to right, #fca5a5, #ef4444);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .btn-logout {
+            background: transparent; border: 1px solid var(--border-color);
+            color: var(--text-muted); padding: 8px 16px; border-radius: 50px; cursor: pointer; transition: 0.2s;
+        }
+        .btn-logout:hover { color: white; border-color: #52525b; }
+
+        /* KARTY OGŁOSZEŃ */
+        #postsList { display: flex; flex-direction: column; gap: 20px; }
+        .post-card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px; box-sizing: border-box; }
+        .post-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+        .post-badges { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .post-author { font-weight: 600; color: var(--text-main); font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .post-date { font-size: 12px; color: var(--text-muted); }
+        .post-text { font-size: 15px; line-height: 1.6; color: #d4d4d8; margin-bottom: 20px; white-space: pre-wrap; word-wrap: break-word; }
+        
+        .badge-type { padding: 6px 12px; border-radius: 50px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .badge-offer { background: var(--offer-bg); color: var(--offer-color); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .badge-seek { background: var(--seek-bg); color: var(--seek-color); border: 1px solid rgba(99, 102, 241, 0.2); }
+
+        .post-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+        .post-contact { color: var(--text-muted); font-size: 14px; background: var(--bg-color); padding: 8px 16px; border-radius: 50px; border: 1px solid var(--border-color); }
+
+        /* PRZYCISKI AKCJI */
+        .admin-actions { display: flex; gap: 10px; }
+        .btn-edit, .btn-delete {
+            border: none; padding: 8px 16px; border-radius: 50px; font-family: 'Inter', sans-serif;
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: white; display: flex; align-items: center; gap: 6px;
+        }
+        .btn-edit { background: #3b82f6; }
+        .btn-edit:hover { background: #2563eb; }
+        .btn-delete { background: #ef4444; }
+        .btn-delete:hover { background: #dc2626; }
+
+        /* MODAL EDYCJI */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: var(--surface-color); border: 1px solid var(--border-color);
+            padding: 30px; border-radius: 20px; width: 90%; max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 16px;
+        }
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+        .modal-content input, .modal-content textarea {
+            background: var(--bg-color); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 14px 16px; color: var(--text-main); font-family: 'Inter', sans-serif; font-size: 14px; outline: none; width: 100%; box-sizing: border-box;
+        }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+        .btn-cancel { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); padding: 10px 20px; border-radius: 50px; cursor: pointer; }
+        .btn-save { background: var(--offer-color); border: none; color: #000; font-weight: 600; padding: 10px 20px; border-radius: 50px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/logo1.png" alt="WatchSmart" class="logo">
+    <button id="logoutBtn" class="btn-logout hidden" onclick="logoutAdmin()">Wyloguj</button>
+</header>
+    
+<!-- EKRAN LOGOWANIA -->
+<div id="loginScreen">
+    <div class="login-title"><i class="fas fa-lock" style="color: var(--accent-primary);"></i> Autoryzacja</div>
+    <input type="email" id="emailInput" placeholder="Adres e-mail administratora">
+    <input type="password" id="passwordInput" placeholder="Hasło">
+    <button class="btn-login" onclick="loginAdmin()">Zaloguj się</button>
+    <div id="loginError"></div>
+</div>
+
+<!-- PANEL ADMINA -->
+<main class="container hidden" id="adminPanel">
+    <div class="admin-title">PANEL ADMINISTRATORA</div>
+    <div id="postsList">Ładowanie ogłoszeń...</div>
+</main>
+
+<!-- Modal Edycji -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-content">
+        <div class="modal-title">Edytuj Ogłoszenie</div>
+        <input type="hidden" id="editPostId">
+        <input type="text" id="editNickname" placeholder="Nick">
+        <input type="text" id="editContact" placeholder="Kontakt">
+        <textarea id="editPostInput" rows="4" placeholder="Treść ogłoszenia"></textarea>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal()">Anuluj</button>
+            <button class="btn-save" onclick="savePostEdit()">Zapisz Zmiany</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    // Nowe importy do logowania
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyALbBW9S9BdFaZvvHiW_TXvar6ZtnUhvvI",
+        authDomain: "watchsmart-50fb9.firebaseapp.com",
+        projectId: "watchsmart-50fb9",
+        storageBucket: "watchsmart-50fb9.firebasestorage.app",
+        messagingSenderId: "498356410021",
+        appId: "1:498356410021:web:b681e4212e0bd2d0171f4c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app); // Inicjalizacja autoryzacji
+
+    let allPosts = [];
+
+    // --- SYSTEM LOGOWANIA ---
+    const loginScreen = document.getElementById("loginScreen");
+    const adminPanel = document.getElementById("adminPanel");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // Nasłuchiwanie zmian stanu logowania
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // Zalogowano
+            loginScreen.classList.add("hidden");
+            adminPanel.classList.remove("hidden");
+            logoutBtn.classList.remove("hidden");
+            loadPosts(); // Pobierz posty dopiero po zalogowaniu
+        } else {
+            // Wylogowano
+            loginScreen.classList.remove("hidden");
+            adminPanel.classList.add("hidden");
+            logoutBtn.classList.add("hidden");
+        }
+    });
+
+    window.loginAdmin = async function() {
+        const email = document.getElementById("emailInput").value;
+        const pass = document.getElementById("passwordInput").value;
+        const errorDiv = document.getElementById("loginError");
+        
+        try {
+            await signInWithEmailAndPassword(auth, email, pass);
+            errorDiv.innerText = "";
+        } catch (error) {
+            errorDiv.innerText = "Błędny e-mail lub hasło.";
+            console.error(error);
+        }
+    };
+
+    window.logoutAdmin = async function() {
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error("Błąd wylogowania", error);
+        }
+    };
+
+    // --- ŁADOWANIE POSTÓW ---
+    function loadPosts() {
+        const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
+            allPosts = [];
+            snapshot.forEach((docSnap) => {
+                allPosts.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            renderAdminPosts();
+        });
+    }
+
+    function getSafeDate(field) {
+        if (!field) return null;
+        if (typeof field.toDate === 'function') return field.toDate();
+        return new Date(field);
+    }
+
+    window.renderAdminPosts = function () {
+        const postsList = document.getElementById("postsList");
+        postsList.innerHTML = "";
+
+        if (allPosts.length === 0) {
+            postsList.innerHTML = `<div style="text-align:center; padding: 40px;">Brak ogłoszeń w bazie.</div>`;
+            return;
+        }
+
+        allPosts.forEach(post => {
+            const div = document.createElement("div");
+            div.className = "post-card";
+            
+            const postDate = getSafeDate(post.createdAt);
+            const dateStr = postDate ? postDate.toLocaleString("pl-PL") : "Brak daty";
+            const safeNickname = escapeHtml(post.nickname || "Anonim");
+            let displayText = post.text || "";
+            let badgeTypeHtml = "";
+
+            const tagMatch = displayText.match(/^\[(SZUKAM|OFERUJĘ)\]\s*/i);
+            if (tagMatch) {
+                const mode = tagMatch[1].toUpperCase();
+                badgeTypeHtml = mode === "OFERUJĘ"
+                    ? `<span class="badge-type badge-offer">🟢 Oferuję</span>`
+                    : `<span class="badge-type badge-seek">🔍 Szukam</span>`;
+            }
+
+            div.innerHTML = `
+                <div class="post-header">
+                    <div class="post-badges">
+                        <span class="post-author"><i class="fas fa-user-circle"></i> ${safeNickname}</span>
+                        ${badgeTypeHtml}
+                    </div>
+                    <div class="post-date">${dateStr} | Komentarzy: ${(post.comments || []).length}</div>
+                </div>
+                <div class="post-text">${escapeHtml(displayText)}</div>
+                <div class="post-footer">
+                    <div class="post-contact"><i class="fas fa-at"></i> ${escapeHtml(post.contact || "Brak")}</div>
+                    <div class="admin-actions">
+                        <button class="btn-edit" onclick="openModal('${post.id}')"><i class="fas fa-edit"></i> Edytuj</button>
+                        <button class="btn-delete" onclick="deletePost('${post.id}')"><i class="fas fa-trash"></i> Usuń (Ukryj)</button>
+                    </div>
+                </div>
+            `;
+            postsList.appendChild(div);
+        });
+    };
+
+    // --- AKCJE ADMINA ---
+    window.deletePost = async function(postId) {
+        if(confirm("Czy na pewno chcesz trwale usunąć to ogłoszenie?")) {
+            try {
+                await deleteDoc(doc(db, "posts", postId));
+            } catch (error) {
+                alert("Odmowa dostępu. Sprawdź reguły Firebase lub zaloguj się ponownie.");
+                console.error(error);
+            }
+        }
+    };
+
+    window.openModal = function(postId) {
+        const post = allPosts.find(p => p.id === postId);
+        if(!post) return;
+        
+        document.getElementById("editPostId").value = post.id;
+        document.getElementById("editNickname").value = post.nickname || "";
+        document.getElementById("editContact").value = post.contact || "";
+        document.getElementById("editPostInput").value = post.text || "";
+        
+        document.getElementById("editModal").classList.add("active");
+    };
+
+    window.closeModal = function() {
+        document.getElementById("editModal").classList.remove("active");
+    };
+
+    window.savePostEdit = async function() {
+        const postId = document.getElementById("editPostId").value;
+        const newNick = document.getElementById("editNickname").value.trim();
+        const newContact = document.getElementById("editContact").value.trim();
+        const newText = document.getElementById("editPostInput").value.trim();
+
+        if(!newText) {
+            alert("Treść nie może być pusta."); return;
+        }
+
+        try {
+            await updateDoc(doc(db, "posts", postId), {
+                nickname: newNick,
+                contact: newContact,
+                text: newText
+            });
+            closeModal();
+        } catch (error) {
+            alert("Odmowa dostępu. Sprawdź reguły Firebase lub zaloguj się ponownie.");
+            console.error(error);
+        }
+    };
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.innerText = text;
+        return div.innerHTML;
+    }
+</script>
+</body>
+</html>
