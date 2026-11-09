@@ -14,7 +14,6 @@
         :root {
             --bg-color: #09090b;
             --surface-color: #18181b;
-            --surface-hover: #27272a;
             --border-color: #27272a;
             --text-main: #f4f4f5;
             --text-muted: #a1a1aa;
@@ -39,16 +38,20 @@
             position: sticky; top: 0; z-index: 100;
             background: rgba(9, 9, 11, 0.8); backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
-            padding: 15px 20px; 
-            display: flex; 
-            justify-content: center; /* To gwarantuje, że logo jest IDEALNIE na środku */
-            align-items: center;
+            padding: 15px 20px; display: flex; justify-content: center; align-items: center;
             height: 70px; box-sizing: border-box;
         }
 
         .logo { height: 45px; width: auto; filter: grayscale(100%) brightness(200%); }
         .container { max-width: 800px; margin: 40px auto 60px auto; padding: 0 20px; box-sizing: border-box; }
         .hidden { display: none !important; }
+
+        .btn-logout {
+            position: absolute; right: 20px;
+            background: transparent; border: 1px solid var(--border-color);
+            color: var(--text-muted); padding: 8px 16px; border-radius: 50px; cursor: pointer; transition: 0.2s;
+        }
+        .btn-logout:hover { color: white; border-color: #52525b; }
 
         /* EKRAN LOGOWANIA */
         #loginScreen {
@@ -78,11 +81,6 @@
             margin-bottom: 30px; background: linear-gradient(to right, #fca5a5, #ef4444);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .btn-logout {
-            background: transparent; border: 1px solid var(--border-color);
-            color: var(--text-muted); padding: 8px 16px; border-radius: 50px; cursor: pointer; transition: 0.2s;
-        }
-        .btn-logout:hover { color: white; border-color: #52525b; }
 
         /* KARTY OGŁOSZEŃ */
         #postsList { display: flex; flex-direction: column; gap: 20px; }
@@ -100,7 +98,7 @@
         .post-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border-color); }
         .post-contact { color: var(--text-muted); font-size: 14px; background: var(--bg-color); padding: 8px 16px; border-radius: 50px; border: 1px solid var(--border-color); }
 
-        /* PRZYCISKI AKCJI */
+        /* PRZYCISKI AKCJI (POSTY) */
         .admin-actions { display: flex; gap: 10px; }
         .btn-edit, .btn-delete {
             border: none; padding: 8px 16px; border-radius: 50px; font-family: 'Inter', sans-serif;
@@ -111,7 +109,27 @@
         .btn-delete { background: #ef4444; }
         .btn-delete:hover { background: #dc2626; }
 
-        /* MODAL EDYCJI */
+        /* KOMENTARZE W PANELU ADMINA */
+        .admin-comments { margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 20px; }
+        .admin-comment-item { 
+            background: var(--bg-color); border: 1px solid var(--border-color); padding: 12px 16px; 
+            border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;
+        }
+        .admin-comment-content { font-size: 13px; color: #d4d4d8; line-height: 1.5; flex-grow: 1; }
+        .admin-comment-meta { font-weight: 600; color: var(--text-main); margin-bottom: 4px; font-size: 12px; display: flex; gap: 6px; align-items: center;}
+        .admin-comment-meta span { color: var(--text-muted); font-weight: 400; }
+        
+        .admin-comment-actions { display: flex; gap: 8px; flex-direction: column; align-items: flex-end; }
+        .btn-edit-comment, .btn-delete-comment { 
+            background: transparent; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; 
+            cursor: pointer; transition: 0.2s; white-space: nowrap; display: flex; gap: 4px; align-items: center;
+        }
+        .btn-edit-comment { border: 1px solid #3b82f6; color: #3b82f6; }
+        .btn-edit-comment:hover { background: #3b82f6; color: white; }
+        .btn-delete-comment { border: 1px solid #ef4444; color: #ef4444; }
+        .btn-delete-comment:hover { background: #ef4444; color: white; }
+
+        /* MODALE (EDYCJA POSTA I KOMENTARZA) */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center;
@@ -138,7 +156,7 @@
     <img src="https://raw.githubusercontent.com/hruston/WatchSmart/refs/heads/main/Ikony%20Watchsmart/logo1.png" alt="WatchSmart" class="logo">
     <button id="logoutBtn" class="btn-logout hidden" onclick="logoutAdmin()">Wyloguj</button>
 </header>
-    
+
 <!-- EKRAN LOGOWANIA -->
 <div id="loginScreen">
     <div class="login-title"><i class="fas fa-lock" style="color: var(--accent-primary);"></i> Autoryzacja</div>
@@ -154,7 +172,7 @@
     <div id="postsList">Ładowanie ogłoszeń...</div>
 </main>
 
-<!-- Modal Edycji -->
+<!-- Modal Edycji Posta -->
 <div class="modal-overlay" id="editModal">
     <div class="modal-content">
         <div class="modal-title">Edytuj Ogłoszenie</div>
@@ -169,10 +187,22 @@
     </div>
 </div>
 
+<!-- Modal Edycji Komentarza -->
+<div class="modal-overlay" id="editCommentModal">
+    <div class="modal-content">
+        <div class="modal-title">Edytuj Komentarz</div>
+        <input type="text" id="editCommentNickname" placeholder="Nick autora">
+        <textarea id="editCommentInput" rows="3" placeholder="Treść komentarza"></textarea>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeCommentModal()">Anuluj</button>
+            <button class="btn-save" onclick="saveCommentEdit()">Zapisz</button>
+        </div>
+    </div>
+</div>
+
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    // Nowe importy do logowania
+    import { getFirestore, collection, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot, arrayRemove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     const firebaseConfig = {
@@ -186,25 +216,26 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const auth = getAuth(app); // Inicjalizacja autoryzacji
+    const auth = getAuth(app);
 
     let allPosts = [];
+    
+    // Zmienne przechowujące informację, który komentarz obecnie edytujemy
+    let currentEditCommentPostId = null;
+    let currentEditCommentIndex = null;
 
     // --- SYSTEM LOGOWANIA ---
     const loginScreen = document.getElementById("loginScreen");
     const adminPanel = document.getElementById("adminPanel");
     const logoutBtn = document.getElementById("logoutBtn");
 
-    // Nasłuchiwanie zmian stanu logowania
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            // Zalogowano
             loginScreen.classList.add("hidden");
             adminPanel.classList.remove("hidden");
             logoutBtn.classList.remove("hidden");
-            loadPosts(); // Pobierz posty dopiero po zalogowaniu
+            loadPosts();
         } else {
-            // Wylogowano
             loginScreen.classList.remove("hidden");
             adminPanel.classList.add("hidden");
             logoutBtn.classList.add("hidden");
@@ -221,16 +252,11 @@
             errorDiv.innerText = "";
         } catch (error) {
             errorDiv.innerText = "Błędny e-mail lub hasło.";
-            console.error(error);
         }
     };
 
     window.logoutAdmin = async function() {
-        try {
-            await signOut(auth);
-        } catch (error) {
-            console.error("Błąd wylogowania", error);
-        }
+        try { await signOut(auth); } catch (error) { console.error(error); }
     };
 
     // --- ŁADOWANIE POSTÓW ---
@@ -278,6 +304,35 @@
                     : `<span class="badge-type badge-seek">🔍 Szukam</span>`;
             }
 
+            // GENEROWANIE SEKCJI KOMENTARZY DLA ADMINA (Z PRZYCISKIEM EDYCJI I USUNIĘCIA)
+            let commentsHtml = "";
+            if (post.comments && post.comments.length > 0) {
+                commentsHtml = `
+                    <div class="admin-comments">
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Zarządzaj komentarzami:</div>
+                        ${post.comments.map((c, index) => `
+                            <div class="admin-comment-item">
+                                <div class="admin-comment-content">
+                                    <div class="admin-comment-meta">
+                                        <i class="fas fa-user-circle"></i> ${escapeHtml(c.nickname || "Anonim")} 
+                                        <span>${escapeHtml(c.createdAt || "")}</span>
+                                    </div>
+                                    <div>${escapeHtml(c.text || "")}</div>
+                                </div>
+                                <div class="admin-comment-actions">
+                                    <button class="btn-edit-comment" onclick="openCommentModal('${post.id}', ${index})">
+                                        <i class="fas fa-edit"></i> Edytuj
+                                    </button>
+                                    <button class="btn-delete-comment" onclick="deleteComment('${post.id}', ${index})">
+                                        <i class="fas fa-trash"></i> Usuń
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
             div.innerHTML = `
                 <div class="post-header">
                     <div class="post-badges">
@@ -290,23 +345,23 @@
                 <div class="post-footer">
                     <div class="post-contact"><i class="fas fa-at"></i> ${escapeHtml(post.contact || "Brak")}</div>
                     <div class="admin-actions">
-                        <button class="btn-edit" onclick="openModal('${post.id}')"><i class="fas fa-edit"></i> Edytuj</button>
-                        <button class="btn-delete" onclick="deletePost('${post.id}')"><i class="fas fa-trash"></i> Usuń (Ukryj)</button>
+                        <button class="btn-edit" onclick="openModal('${post.id}')"><i class="fas fa-edit"></i> Edytuj Post</button>
+                        <button class="btn-delete" onclick="deletePost('${post.id}')"><i class="fas fa-trash"></i> Usuń Post</button>
                     </div>
                 </div>
+                ${commentsHtml}
             `;
             postsList.appendChild(div);
         });
     };
 
-    // --- AKCJE ADMINA ---
+    // --- AKCJE ADMINA (POSTY) ---
     window.deletePost = async function(postId) {
         if(confirm("Czy na pewno chcesz trwale usunąć to ogłoszenie?")) {
             try {
                 await deleteDoc(doc(db, "posts", postId));
             } catch (error) {
-                alert("Odmowa dostępu. Sprawdź reguły Firebase lub zaloguj się ponownie.");
-                console.error(error);
+                alert("Odmowa dostępu.");
             }
         }
     };
@@ -314,12 +369,10 @@
     window.openModal = function(postId) {
         const post = allPosts.find(p => p.id === postId);
         if(!post) return;
-        
         document.getElementById("editPostId").value = post.id;
         document.getElementById("editNickname").value = post.nickname || "";
         document.getElementById("editContact").value = post.contact || "";
         document.getElementById("editPostInput").value = post.text || "";
-        
         document.getElementById("editModal").classList.add("active");
     };
 
@@ -333,9 +386,7 @@
         const newContact = document.getElementById("editContact").value.trim();
         const newText = document.getElementById("editPostInput").value.trim();
 
-        if(!newText) {
-            alert("Treść nie może być pusta."); return;
-        }
+        if(!newText) { alert("Treść nie może być pusta."); return; }
 
         try {
             await updateDoc(doc(db, "posts", postId), {
@@ -344,8 +395,83 @@
                 text: newText
             });
             closeModal();
+        } catch (error) { alert("Odmowa dostępu."); }
+    };
+
+    // --- AKCJE ADMINA (KOMENTARZE) ---
+    window.deleteComment = async function(postId, commentIndex) {
+        if(!confirm("Czy na pewno chcesz usunąć ten komentarz?")) return;
+        
+        const post = allPosts.find(p => p.id === postId);
+        if(!post || !post.comments) return;
+        
+        const commentToRemove = post.comments[commentIndex];
+
+        try {
+            await updateDoc(doc(db, "posts", postId), {
+                comments: arrayRemove(commentToRemove)
+            });
         } catch (error) {
-            alert("Odmowa dostępu. Sprawdź reguły Firebase lub zaloguj się ponownie.");
+            alert("Błąd usuwania komentarza.");
+        }
+    };
+
+    window.openCommentModal = function(postId, commentIndex) {
+        const post = allPosts.find(p => p.id === postId);
+        if(!post || !post.comments) return;
+
+        const comment = post.comments[commentIndex];
+        
+        // Zapisujemy w pamięci, co edytujemy
+        currentEditCommentPostId = postId;
+        currentEditCommentIndex = commentIndex;
+
+        // Wypełniamy pola
+        document.getElementById("editCommentNickname").value = comment.nickname || "";
+        document.getElementById("editCommentInput").value = comment.text || "";
+        
+        // Pokazujemy modal
+        document.getElementById("editCommentModal").classList.add("active");
+    };
+
+    window.closeCommentModal = function() {
+        document.getElementById("editCommentModal").classList.remove("active");
+        currentEditCommentPostId = null;
+        currentEditCommentIndex = null;
+    };
+
+    window.saveCommentEdit = async function() {
+        if (!currentEditCommentPostId || currentEditCommentIndex === null) return;
+
+        const newNick = document.getElementById("editCommentNickname").value.trim();
+        const newText = document.getElementById("editCommentInput").value.trim();
+
+        if(!newText) {
+            alert("Treść komentarza nie może być pusta.");
+            return;
+        }
+
+        const post = allPosts.find(p => p.id === currentEditCommentPostId);
+        if(!post || !post.comments) return;
+
+        // 1. Kopiujemy całą obecną tablicę komentarzy
+        const updatedComments = [...post.comments];
+        
+        // 2. Podmieniamy tylko edytowany komentarz
+        updatedComments[currentEditCommentIndex] = {
+            ...updatedComments[currentEditCommentIndex], // Zachowaj m.in. datę (createdAt)
+            nickname: newNick || "Anonim",
+            text: newText
+        };
+
+        try {
+            // 3. Wrzucamy całą zaktualizowaną tablicę do Firebase
+            await updateDoc(doc(db, "posts", currentEditCommentPostId), {
+                comments: updatedComments
+            });
+            closeCommentModal();
+        } catch (error) {
+            alert("Błąd podczas zapisywania edycji komentarza.");
             console.error(error);
         }
     };
